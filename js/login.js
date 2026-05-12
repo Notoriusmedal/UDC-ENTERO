@@ -5,6 +5,12 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
+  // Botón volver al inicio también desde el header del login
+  document.querySelector('a[href="index.html"]')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = 'index.html';
+  });
+
   const form         = document.getElementById('loginForm');
   const alertBox     = document.getElementById('loginAlert');
   const alertMsg     = document.getElementById('loginAlertMsg');

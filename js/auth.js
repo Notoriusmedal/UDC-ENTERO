@@ -46,7 +46,7 @@ const auth = {
   logout() {
     localStorage.removeItem(auth.TOKEN_KEY);
     localStorage.removeItem(auth.USER_KEY);
-    window.location.href = 'index.html';
+    window.location.href = 'login.html';
   },
 
   getCurrentUser() {
@@ -69,7 +69,7 @@ const auth = {
 
   requireAuth() {
     if (!auth.isAuthenticated()) {
-      window.location.href = 'index.html';
+      window.location.href = 'login.html';
     }
   },
 

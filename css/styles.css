@@ -67,7 +67,7 @@ body {
 .sidebar-logo-icon {
   width: 38px;
   height: 38px;
-  background: var(--primary);
+  background: transparent;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -589,6 +589,220 @@ body {
   margin: 0;
 }
 
+/* ===== Landing Page ===== */
+.landing-body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100vh;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.landing-video-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+.landing-video-wrap video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.landing-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.88) 0%,
+    rgba(30, 58, 95, 0.65) 50%,
+    rgba(15, 23, 42, 0.88) 100%
+  );
+}
+
+/* Sin vídeo → fondo de respaldo */
+.landing-body:not(:has(video[src])) .landing-video-wrap,
+.landing-video-wrap:has(video:not([src])) {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 55%, #0f172a 100%);
+}
+
+.landing-container {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  gap: 36px;
+  text-align: center;
+}
+
+/* Branding */
+.landing-brand {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  animation: ldFadeDown 0.7s ease both;
+}
+
+.landing-logo-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  color: white;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+.landing-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+.landing-title {
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 800;
+  margin: 0 0 4px;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  text-align: left;
+}
+
+.landing-tagline {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+  margin: 0;
+  text-align: left;
+}
+
+/* Sección deportes */
+.landing-section {
+  animation: ldFadeUp 0.7s ease 0.15s both;
+}
+
+.landing-section-label {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 15px;
+  margin-bottom: 18px;
+  font-weight: 500;
+}
+
+.sports-grid {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.sport-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 18px 22px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 100px;
+  transition: all 0.2s ease;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.sport-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-4px);
+  color: white;
+}
+
+.sport-card.active {
+  background: rgba(37, 99, 235, 0.45);
+  border-color: #60a5fa;
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.35);
+  color: white;
+}
+
+.sport-emoji {
+  font-size: 34px;
+  line-height: 1;
+  display: block;
+}
+
+.sport-name {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+/* Botón entrar */
+.btn-landing-enter {
+  display: inline-flex;
+  align-items: center;
+  background: #2563eb;
+  color: white;
+  padding: 14px 34px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 8px 28px rgba(37, 99, 235, 0.45);
+  animation: ldFadeUp 0.7s ease 0.3s both;
+  white-space: nowrap;
+}
+
+.btn-landing-enter:hover {
+  background: #1d4ed8;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 14px 36px rgba(37, 99, 235, 0.55);
+}
+
+.landing-selected-label {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+  margin: -20px 0 0;
+  animation: ldFadeUp 0.7s ease 0.45s both;
+  min-height: 18px;
+}
+
+/* Animaciones */
+@keyframes ldFadeDown {
+  from { opacity: 0; transform: translateY(-18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ldFadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive landing */
+@media (max-width: 600px) {
+  .landing-brand {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .landing-title    { text-align: center; font-size: 22px; }
+  .landing-tagline  { text-align: center; }
+  .sport-card       { min-width: 80px; padding: 14px 14px; }
+  .sport-emoji      { font-size: 28px; }
+}
+
 /* ===== Login ===== */
 .login-page {
   min-height: 100vh;
@@ -609,9 +823,8 @@ body {
 }
 
 .login-logo {
-  width: 54px;
-  height: 54px;
-  background: var(--primary);
+  width: 70px;
+  height: 70px;
   border-radius: 14px;
   display: flex;
   align-items: center;
@@ -619,6 +832,15 @@ body {
   font-size: 24px;
   color: white;
   margin: 0 auto 18px;
+  overflow: hidden;
+  background: transparent;
+}
+
+.login-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
 }
 
 .login-title {

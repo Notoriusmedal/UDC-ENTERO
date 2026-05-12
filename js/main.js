@@ -41,7 +41,8 @@ function buildSidebar(activePage) {
     <nav class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <div class="sidebar-logo-icon">
-          <i class="bi bi-trophy-fill"></i>
+          <img src="assets/icons/LOGO UDC.png" alt="UDC" style="width:28px;height:28px;object-fit:contain;border-radius:4px"
+               onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<i class=&quot;bi bi-trophy-fill&quot; style=&quot;color:white;font-size:18px&quot;></i>')">
         </div>
         <div class="sidebar-brand-text">
           <div class="sidebar-brand">UDC</div>

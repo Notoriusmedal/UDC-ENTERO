@@ -3,60 +3,84 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Iniciar Sesión - UDC</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Union Deporte Canaria - UDC</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/icons/LOGO SIN LETRAS UDC.png">
 </head>
-<body class="login-page">
+<body class="landing-body">
 
-  <div class="login-card">
-    <div class="login-logo">
-      <i class="bi bi-trophy-fill"></i>
-    </div>
-    <h1 class="login-title">Union Deporte Canaria</h1>
-    <p class="login-subtitle">Gestión de árbitros y partidos</p>
-
-    <div id="loginAlert" class="alert alert-danger d-none py-2" role="alert">
-      <i class="bi bi-exclamation-triangle-fill me-2"></i>
-      <span id="loginAlertMsg">Credenciales incorrectas.</span>
-    </div>
-
-    <form id="loginForm" novalidate>
-      <div class="mb-3">
-        <label for="username" class="form-label">Usuario</label>
-        <div class="input-group">
-          <span class="input-group-text bg-white"><i class="bi bi-person text-secondary"></i></span>
-          <input type="text" class="form-control" id="username"
-                 placeholder="Introduce tu usuario" required autocomplete="username">
-        </div>
-      </div>
-      <div class="mb-4">
-        <label for="password" class="form-label">Contraseña</label>
-        <div class="input-group">
-          <span class="input-group-text bg-white"><i class="bi bi-lock text-secondary"></i></span>
-          <input type="password" class="form-control" id="password"
-                 placeholder="Introduce tu contraseña" required autocomplete="current-password">
-          <button class="btn btn-outline-secondary" type="button" id="togglePassword" tabindex="-1">
-            <i class="bi bi-eye" id="toggleIcon"></i>
-          </button>
-        </div>
-      </div>
-      <button type="submit" class="btn btn-primary w-100 py-2" id="loginBtn">
-        <span id="loginBtnText">Iniciar sesión</span>
-        <span id="loginSpinner" class="spinner-border spinner-border-sm ms-2 d-none" role="status"></span>
-      </button>
-    </form>
-
-    <hr class="my-4">
-    <p class="text-center mb-0" style="font-size: 12px; color: #94a3b8;">
-      Union Deporte Canaria &copy; 2025
-    </p>
+  <!-- Fondo de vídeo -->
+  <div class="landing-video-wrap">
+    <video autoplay muted loop playsinline id="bgVideo">
+      <source src="assets/videos/bg.mp4" type="video/mp4">
+      <source src="assets/videos/bg.webm" type="video/webm">
+    </video>
+    <div class="landing-overlay"></div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Contenido principal -->
+  <div class="landing-container">
+
+    <!-- Branding -->
+    <div class="landing-brand" id="landingBrand">
+      <div class="landing-logo-icon">
+        <img src="assets/icons/LOGO SIN LETRAS UDC.png" alt="UDC" class="landing-logo-img"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <i class="bi bi-trophy-fill" style="display:none"></i>
+      </div>
+      <div>
+        <h1 class="landing-title">Union Deporte Canaria</h1>
+        <p class="landing-tagline">Plataforma de gestión arbitral · Tenerife</p>
+      </div>
+    </div>
+
+    <!-- Selección de deporte -->
+    <div class="landing-section" id="landingSection">
+      <p class="landing-section-label">¿Qué deporte quieres ver hoy?</p>
+      <div class="sports-grid" id="sportsGrid">
+
+        <button class="sport-card" data-deporte="TODOS">
+          <span class="sport-emoji">🏟️</span>
+          <span class="sport-name">Todos</span>
+        </button>
+
+        <button class="sport-card" data-deporte="FUTBOL">
+          <span class="sport-emoji">⚽</span>
+          <span class="sport-name">Fútbol</span>
+        </button>
+
+        <button class="sport-card" data-deporte="BALONCESTO">
+          <span class="sport-emoji">🏀</span>
+          <span class="sport-name">Baloncesto</span>
+        </button>
+
+        <button class="sport-card" data-deporte="VOLEIBOL">
+          <span class="sport-emoji">🏐</span>
+          <span class="sport-name">Voleibol</span>
+        </button>
+
+        <button class="sport-card" data-deporte="BALONMANO">
+          <span class="sport-emoji">🤾</span>
+          <span class="sport-name">Balonmano</span>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Botón acceder -->
+    <a href="login.html" class="btn-landing-enter" id="btnEntrar">
+      Acceder a la plataforma
+      <i class="bi bi-arrow-right ms-2"></i>
+    </a>
+
+    <!-- Deporte seleccionado (aparece bajo el botón) -->
+    <p class="landing-selected-label" id="selectedLabel"></p>
+
+  </div>
+
   <script src="js/api.js"></script>
   <script src="js/auth.js"></script>
-  <script src="js/login.js"></script>
+  <script src="js/landing.js"></script>
 </body>
 </html>
