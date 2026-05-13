@@ -82,6 +82,9 @@ function buildTopbar(pageTitle) {
         <h1 class="topbar-page-title">${pageTitle}</h1>
       </div>
       <div class="topbar-right">
+        <button class="topbar-icon-btn" title="Cambiar tema" id="themeToggleBtn" onclick="toggleTheme()">
+          <i class="bi bi-moon-fill theme-icon" id="themeIcon"></i>
+        </button>
         <button class="topbar-icon-btn" title="Notificaciones" id="notiBtn">
           <i class="bi bi-bell"></i>
           <span class="badge-dot d-none" id="notiBadge"></span>
@@ -114,6 +117,13 @@ function initLayout(pageTitle, activePage) {
 
   document.getElementById('sidebar-container').innerHTML = buildSidebar(activePage);
   document.getElementById('topbar-container').innerHTML  = buildTopbar(pageTitle);
+
+  // Sync theme icon with current theme
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+  const themeIcon = document.getElementById('themeIcon');
+  if (themeIcon) {
+    themeIcon.className = 'bi ' + (currentTheme === 'dark' ? 'bi-sun-fill' : 'bi-moon-fill') + ' theme-icon';
+  }
 
   // Toggle sidebar
   const sidebar        = document.getElementById('sidebar');
