@@ -1,0 +1,194 @@
+<section class="module-page">
+  <header class="module-header">
+    <div>
+      <span class="module-kicker"><i class="bi bi-trophy"></i> Competición</span>
+      <h2>Partidos</h2>
+      <p>Gestiona encuentros, cobertura arbitral, estado y agenda deportiva desde Angular.</p>
+    </div>
+    @if (canManage) {
+      <a class="btn btn-primary" href="#partidoForm"><i class="bi bi-plus-lg me-1"></i> Nuevo partido</a>
+    }
+  </header>
+
+  <div class="module-metrics">
+    <article class="mini-stat">
+      <span class="mini-stat-icon mini-stat-blue"><i class="bi bi-trophy"></i></span>
+      <span><strong>{{ metrics().total }}</strong><span>Partidos visibles</span></span>
+    </article>
+    <article class="mini-stat">
+      <span class="mini-stat-icon mini-stat-green"><i class="bi bi-calendar-check"></i></span>
+      <span><strong>{{ metrics().programados }}</strong><span>Programados</span></span>
+    </article>
+    <article class="mini-stat">
+      <span class="mini-stat-icon mini-stat-green"><i class="bi bi-shield-check"></i></span>
+      <span><strong>{{ metrics().completos }}</strong><span>Cobertura completa</span></span>
+    </article>
+    <article class="mini-stat">
+      <span class="mini-stat-icon mini-stat-yellow"><i class="bi bi-exclamation-triangle"></i></span>
+      <span><strong>{{ metrics().incompletos }}</strong><span>Necesitan revisión</span></span>
+    </article>
+  </div>
+
+  @if (error()) {
+    <div class="alert dashboard-alert" role="alert"><i class="bi bi-exclamation-triangle"></i>{{ error() }}</div>
+  }
+
+  <app-collapsible-panel
+    kicker="Filtros"
+    title="Filtrar partidos"
+    description="Busca por equipo, deporte o estado"
+    icon="bi-sliders"
+  >
+    <button panel-actions class="btn btn-outline-primary btn-sm" type="button" (click)="load()">
+      <i class="bi bi-arrow-clockwise me-1"></i> Actualizar
+    </button>
+
+    <div class="filters-grid">
+      <input class="form-control" placeholder="Buscar partido..." [(ngModel)]="filters.q" (keyup.enter)="load()" />
+      <select class="form-select" [(ngModel)]="filters.estado" (change)="load()">
+        <option value="">Todos los estados</option>
+        <option value="PROGRAMADO">Programado</option>
+        <option value="EN_CURSO">En directo</option>
+        <option value="FINALIZADO">Finalizado</option>
+        <option value="CANCELADO">Cancelado</option>
+      </select>
+      <select class="form-select" [(ngModel)]="filters.deporte" (change)="load()">
+        <option value="">Todos los deportes</option>
+        <option value="FUTBOL">Fútbol</option>
+        <option value="BALONCESTO">Baloncesto</option>
+        <option value="VOLEIBOL">Voleibol</option>
+        <option value="BALONMANO">Balonmano</option>
+      </select>
+      <button class="btn btn-primary" type="button" (click)="load()">Aplicar filtros</button>
+    </div>
+  </app-collapsible-panel>
+
+  @if (canManage) {
+    <app-collapsible-panel
+      id="partidoForm"
+      kicker="Gestión"
+      [title]="editingId() ? 'Editar partido' : 'Crear partido'"
+      description="Campos principales compatibles con el backend actual"
+      icon="bi-plus-circle"
+    >
+      @if (editingId()) {
+        <button panel-actions class="btn btn-outline-primary btn-sm" type="button" (click)="cancelEdit()">Cancelar edición</button>
+      }
+
+      <form class="row g-3" (ngSubmit)="save()">
+        <div class="col-12 col-md-6">
+          <label class="form-label">Equipo local</label>
+          <input class="form-control" required [(ngModel)]="form.equipoLocal" name="equipoLocal" />
+        </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label">Equipo visitante</label>
+          <input class="form-control" required [(ngModel)]="form.equipoVisitante" name="equipoVisitante" />
+        </div>
+        <div class="col-12 col-md-4">
+          <label class="form-label">Deporte</label>
+          <select class="form-select" [(ngModel)]="form.deporte" name="deporte">
+            <option value="FUTBOL">Fútbol</option>
+            <option value="BALONCESTO">Baloncesto</option>
+            <option value="VOLEIBOL">Voleibol</option>
+            <option value="BALONMANO">Balonmano</option>
+          </select>
+        </div>
+        <div class="col-12 col-md-4">
+          <label class="form-label">Competición</label>
+          <input class="form-control" [(ngModel)]="form.competicion" name="competicion" />
+        </div>
+        <div class="col-12 col-md-4">
+          <label class="form-label">Fecha y hora</label>
+          <input class="form-control" type="datetime-local" required [(ngModel)]="form.fechaLocal" name="fecha" />
+        </div>
+        <div class="col-12 col-md-5">
+          <label class="form-label">Lugar</label>
+          <input class="form-control" [(ngModel)]="form.lugar" name="lugar" />
+        </div>
+        <div class="col-6 col-md-3">
+          <label class="form-label">Árbitros requeridos</label>
+          <input class="form-control" type="number" min="1" [(ngModel)]="form.arbitrosRequeridos" name="arbitros" />
+        </div>
+        <div class="col-6 col-md-4">
+          <label class="form-label">Estado</label>
+          <select class="form-select" [(ngModel)]="form.estado" name="estado">
+            <option value="PROGRAMADO">Programado</option>
+            <option value="EN_CURSO">En directo</option>
+            <option value="FINALIZADO">Finalizado</option>
+            <option value="CANCELADO">Cancelado</option>
+          </select>
+        </div>
+        <div class="col-12">
+          <label class="form-label">Observaciones</label>
+          <textarea class="form-control" rows="2" [(ngModel)]="form.observaciones" name="observaciones"></textarea>
+        </div>
+        <div class="col-12 d-flex justify-content-end gap-2">
+          <button class="btn btn-primary" type="submit" [disabled]="saving()">
+            {{ saving() ? 'Guardando...' : (editingId() ? 'Actualizar partido' : 'Crear partido') }}
+          </button>
+        </div>
+      </form>
+    </app-collapsible-panel>
+  }
+
+  <app-collapsible-panel
+    kicker="Listado"
+    title="Partidos encontrados"
+    description="Resumen operativo de encuentros"
+    icon="bi-list-ul"
+    [count]="partidos().length"
+    [defaultCollapsed]="false"
+  >
+
+    @if (loading()) {
+      <div class="loading-panel"><span class="spinner-border spinner-border-sm"></span>Cargando partidos...</div>
+    } @else if (partidos().length) {
+      <div class="table-responsive d-none d-lg-block">
+        <table class="table modern-table align-middle mb-0">
+          <thead>
+            <tr>
+              <th>Partido</th>
+              <th>Deporte</th>
+              <th>Fecha</th>
+              <th>Lugar</th>
+              <th>Árbitros</th>
+              <th>Estado</th>
+              <th class="text-end">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (partido of partidos(); track partido.id) {
+              <tr>
+                <td>
+                  <div class="table-title">{{ matchTitle(partido) }}</div>
+                  <div class="table-subtitle">{{ partido.competicion || 'Competición general' }}</div>
+                </td>
+                <td><span class="soft-chip soft-chip-blue">{{ partido.deporte || 'Deporte' }}</span></td>
+                <td>{{ matchDate(partido) }}</td>
+                <td>{{ partido.lugar || 'Lugar pendiente' }}</td>
+                <td><span class="soft-chip soft-chip-green">{{ coverage(partido) }}</span></td>
+                <td><app-status-badge [status]="partido.estado || 'PROGRAMADO'" /></td>
+                <td class="text-end">
+                  <div class="d-inline-flex gap-2">
+                    @if (canManage) {
+                      <button class="icon-action" type="button" (click)="edit(partido)" aria-label="Editar"><i class="bi bi-pencil"></i></button>
+                      <button class="icon-action danger" type="button" (click)="remove(partido)" aria-label="Eliminar"><i class="bi bi-trash"></i></button>
+                    }
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="responsive-cards d-lg-none">
+        @for (partido of partidos(); track partido.id) {
+          <app-match-card [match]="partido" />
+        }
+      </div>
+    } @else {
+      <app-empty-state icon="bi-calendar2-check" title="No hay partidos" description="Crea el primer encuentro o cambia los filtros." />
+    }
+  </app-collapsible-panel>
+</section>

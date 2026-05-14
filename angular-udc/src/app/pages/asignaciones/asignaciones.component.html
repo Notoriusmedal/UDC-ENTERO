@@ -1,0 +1,195 @@
+<section class="module-page">
+  <header class="module-header">
+    <div>
+      <span class="module-kicker"><i class="bi bi-calendar-check"></i> Cobertura arbitral</span>
+      <h2>Asignaciones</h2>
+      <p>Asigna árbitros, confirma disponibilidad y usa sugerencias automáticas para reducir errores.</p>
+    </div>
+  </header>
+
+  <div class="module-metrics">
+    <article class="mini-stat">
+      <span class="mini-stat-icon mini-stat-blue"><i class="bi bi-calendar-check"></i></span>
+      <span><strong>{{ metrics().total }}</strong><span>Asignaciones</span></span>
+    </article>
+    <article class="mini-stat">
+      <span class="mini-stat-icon mini-stat-yellow"><i class="bi bi-hourglass-split"></i></span>
+      <span><strong>{{ metrics().pendientes }}</strong><span>Pendientes</span></span>
+    </article>
+    <article class="mini-stat">
+      <span class="mini-stat-icon mini-stat-green"><i class="bi bi-check2-circle"></i></span>
+      <span><strong>{{ metrics().confirmadas }}</strong><span>Confirmadas</span></span>
+    </article>
+    <article class="mini-stat">
+      <span class="mini-stat-icon mini-stat-red"><i class="bi bi-x-circle"></i></span>
+      <span><strong>{{ metrics().rechazadas }}</strong><span>Rechazadas</span></span>
+    </article>
+  </div>
+
+  @if (error()) {
+    <div class="alert dashboard-alert" role="alert"><i class="bi bi-exclamation-triangle"></i>{{ error() }}</div>
+  }
+
+  @if (canManage) {
+    <app-collapsible-panel
+      kicker="Gestión"
+      title="Nueva asignación"
+      description="El backend evita duplicados y conflictos horarios"
+      icon="bi-person-plus"
+    >
+
+      <form class="row g-3" (ngSubmit)="save()">
+        <div class="col-12 col-lg-5">
+          <label class="form-label">Partido</label>
+          <select class="form-select" required [(ngModel)]="form.partidoId" name="partidoId" (change)="sugerencias.set([])">
+            <option value="">Selecciona un partido...</option>
+            @for (partido of partidos(); track partido.id) {
+              <option [value]="partido.id">{{ partidoLabel(partido) }} · {{ dateLabel(partido.fecha || partido.fechaInicio) }}</option>
+            }
+          </select>
+        </div>
+        <div class="col-12 col-lg-4">
+          <label class="form-label">Árbitro</label>
+          <select class="form-select" required [(ngModel)]="form.arbitroId" name="arbitroId">
+            <option value="">Selecciona un árbitro...</option>
+            @for (arbitro of arbitros(); track arbitro.id) {
+              <option [value]="arbitro.id">{{ arbitroLabel(arbitro) }} · {{ arbitro.categoria || 'Sin categoría' }}</option>
+            }
+          </select>
+        </div>
+        <div class="col-12 col-lg-3">
+          <label class="form-label">Rol</label>
+          <select class="form-select" [(ngModel)]="form.rol" name="rol">
+            <option>Principal</option>
+            <option>Asistente 1</option>
+            <option>Asistente 2</option>
+            <option>Cuarto árbitro</option>
+          </select>
+        </div>
+        <div class="col-12">
+          <label class="form-label">Observaciones</label>
+          <textarea class="form-control" rows="2" [(ngModel)]="form.observaciones" name="observaciones"></textarea>
+        </div>
+        <div class="col-12 d-flex flex-wrap justify-content-between gap-2">
+          <button class="btn btn-outline-primary" type="button" (click)="sugerir()">
+            <i class="bi bi-stars me-1"></i> Sugerir árbitros
+          </button>
+          <button class="btn btn-primary" type="submit" [disabled]="saving()">
+            {{ saving() ? 'Guardando...' : 'Crear asignación' }}
+          </button>
+        </div>
+      </form>
+
+      @if (sugerencias().length) {
+        <div class="row g-3 mt-2">
+          @for (s of sugerencias(); track s.arbitro.id) {
+            <div class="col-12 col-lg-6">
+              <article class="mobile-record">
+                <div class="d-flex justify-content-between gap-3">
+                  <div>
+                    <div class="table-title">{{ arbitroLabel(s.arbitro) }}</div>
+                    <div class="table-subtitle">{{ s.arbitro.categoria }} · {{ (s.arbitro.competencias || []).join(', ') }}</div>
+                    <div class="table-subtitle mt-2">{{ s.motivos.join(' · ') }}</div>
+                  </div>
+                  <span class="soft-chip soft-chip-blue">{{ s.puntos }}/100</span>
+                </div>
+                <button class="btn btn-outline-primary btn-sm mt-3" type="button" (click)="usar(s.arbitro)">Usar este árbitro</button>
+              </article>
+            </div>
+          }
+        </div>
+      }
+    </app-collapsible-panel>
+  }
+
+  <app-collapsible-panel
+    kicker="Listado"
+    title="Asignaciones actuales"
+    description="Seguimiento de confirmaciones y rechazos"
+    icon="bi-list-check"
+    [count]="asignaciones().length"
+    [defaultCollapsed]="false"
+  >
+      <div panel-actions class="d-flex gap-2">
+        <select class="form-select form-select-sm" [(ngModel)]="filters.estado" (change)="loadAll()">
+          <option value="">Todos</option>
+          <option value="PENDIENTE">Pendientes</option>
+          <option value="CONFIRMADO">Confirmadas</option>
+          <option value="RECHAZADO">Rechazadas</option>
+        </select>
+        <button class="btn btn-outline-primary btn-sm" type="button" (click)="loadAll()">Actualizar</button>
+      </div>
+
+    @if (loading()) {
+      <div class="loading-panel"><span class="spinner-border spinner-border-sm"></span>Cargando asignaciones...</div>
+    } @else if (asignaciones().length) {
+      <div class="table-responsive d-none d-lg-block">
+        <table class="table modern-table align-middle mb-0">
+          <thead>
+            <tr>
+              <th>Partido</th>
+              <th>Árbitro</th>
+              <th>Rol</th>
+              <th>Estado</th>
+              <th>Fecha</th>
+              <th class="text-end">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (asignacion of asignaciones(); track asignacion.id) {
+              <tr>
+                <td>
+                  <div class="table-title">{{ assignmentTitle(asignacion) }}</div>
+                  <div class="table-subtitle">{{ asignacion.partido?.deporte || 'Deporte' }}</div>
+                </td>
+                <td>{{ refereeName(asignacion) }}</td>
+                <td><span class="soft-chip">{{ asignacion.rol || 'Principal' }}</span></td>
+                <td><app-status-badge [status]="asignacion.estado || 'PENDIENTE'" /></td>
+                <td>{{ dateLabel(asignacion.partido?.fecha) }}</td>
+                <td class="text-end">
+                  <div class="d-inline-flex gap-2">
+                    <button class="icon-action" type="button" (click)="confirmar(asignacion)" aria-label="Confirmar"><i class="bi bi-check2"></i></button>
+                    <button class="icon-action danger" type="button" (click)="rechazar(asignacion)" aria-label="Rechazar"><i class="bi bi-x-lg"></i></button>
+                    @if (canManage) {
+                      <button class="icon-action danger" type="button" (click)="remove(asignacion)" aria-label="Eliminar"><i class="bi bi-trash"></i></button>
+                    }
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="responsive-cards d-lg-none">
+        @for (asignacion of asignaciones(); track asignacion.id) {
+          <article class="mobile-record">
+            <div class="mobile-record-header">
+              <div>
+                <div class="table-title">{{ assignmentTitle(asignacion) }}</div>
+                <div class="table-subtitle">{{ asignacion.partido?.deporte || 'Deporte' }} · {{ asignacion.rol || 'Principal' }}</div>
+              </div>
+              <app-status-badge [status]="asignacion.estado || 'PENDIENTE'" />
+            </div>
+
+            <div class="mobile-record-meta">
+              <span><i class="bi bi-person-badge"></i>{{ refereeName(asignacion) }}</span>
+              <span><i class="bi bi-calendar2-week"></i>{{ dateLabel(asignacion.partido?.fecha) }}</span>
+              <span><i class="bi bi-geo-alt"></i>{{ asignacion.partido?.lugar || 'Lugar pendiente' }}</span>
+            </div>
+
+            <div class="mobile-record-actions">
+              <button class="icon-action" type="button" (click)="confirmar(asignacion)" aria-label="Confirmar"><i class="bi bi-check2"></i></button>
+              <button class="icon-action danger" type="button" (click)="rechazar(asignacion)" aria-label="Rechazar"><i class="bi bi-x-lg"></i></button>
+              @if (canManage) {
+                <button class="icon-action danger" type="button" (click)="remove(asignacion)" aria-label="Eliminar"><i class="bi bi-trash"></i></button>
+              }
+            </div>
+          </article>
+        }
+      </div>
+    } @else {
+      <app-empty-state icon="bi-calendar-check" title="No hay asignaciones" description="Crea una asignación o cambia el filtro." />
+    }
+  </app-collapsible-panel>
+</section>

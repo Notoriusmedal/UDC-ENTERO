@@ -1,0 +1,43 @@
+:host {
+  display: block;
+}
+
+.empty-state {
+  align-items: center;
+  background: linear-gradient(180deg, rgba(10, 132, 255, 0.05), rgba(0, 199, 190, 0.04));
+  border: 1px dashed rgba(10, 132, 255, 0.28);
+  border-radius: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 28px;
+  text-align: center;
+}
+
+.empty-icon {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid var(--app-border);
+  border-radius: 18px;
+  color: var(--app-primary);
+  display: inline-flex;
+  font-size: 24px;
+  height: 52px;
+  justify-content: center;
+  width: 52px;
+}
+
+h3 {
+  color: var(--app-text);
+  font-size: 18px;
+  font-weight: 800;
+  margin: 6px 0 0;
+}
+
+p {
+  color: var(--app-muted);
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  max-width: 34rem;
+}

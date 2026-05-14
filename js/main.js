@@ -36,17 +36,18 @@ function buildSidebar(activePage) {
   const initials = user
     ? (user.nombre?.charAt(0) ?? '') + (user.apellidos?.charAt(0) ?? '')
     : 'U';
+  const nombre = user ? `${user.nombre ?? ''} ${user.apellidos ?? ''}`.trim() : 'Usuario';
 
   return `
     <nav class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <div class="sidebar-logo-icon">
-          <img src="assets/icons/LOGO UDC.png" alt="UDC" style="width:28px;height:28px;object-fit:contain;border-radius:4px"
-               onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<i class=&quot;bi bi-trophy-fill&quot; style=&quot;color:white;font-size:18px&quot;></i>')">
+          <img src="assets/icons/LOGO UDC.png" alt="UDC"
+               onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<i class=&quot;bi bi-trophy-fill&quot;></i>')">
         </div>
         <div class="sidebar-brand-text">
           <div class="sidebar-brand">UDC</div>
-          <div class="sidebar-subtitle">Deporte Canaria</div>
+          <div class="sidebar-subtitle">Deporte Canarias</div>
         </div>
       </div>
 
@@ -57,6 +58,13 @@ function buildSidebar(activePage) {
       </ul>
 
       <div class="sidebar-footer">
+        <a href="perfil.html" class="sidebar-user" data-tooltip="Mi perfil">
+          <div class="user-avatar">${initials.toUpperCase()}</div>
+          <div class="sidebar-user-info">
+            <div class="sidebar-user-name">${nombre}</div>
+            <div class="sidebar-user-role">${auth.getRoleLabel()}</div>
+          </div>
+        </a>
         <a href="#" class="nav-link" id="logoutBtn" data-tooltip="Cerrar sesión">
           <i class="bi bi-box-arrow-left"></i>
           <span>Cerrar sesión</span>
@@ -79,7 +87,10 @@ function buildTopbar(pageTitle) {
         <button class="sidebar-toggle-btn" id="sidebarToggle" title="Ocultar/mostrar menú">
           <i class="bi bi-list"></i>
         </button>
-        <h1 class="topbar-page-title">${pageTitle}</h1>
+        <div>
+          <h1 class="topbar-page-title">${pageTitle}</h1>
+          <div class="topbar-page-subtitle">UDC / Deporte Canarias</div>
+        </div>
       </div>
       <div class="topbar-right">
         <button class="topbar-icon-btn" title="Cambiar tema" id="themeToggleBtn" onclick="toggleTheme()">
@@ -102,7 +113,7 @@ function buildTopbar(pageTitle) {
             <li><h6 class="dropdown-header">${nombre}</h6></li>
             <li><span class="dropdown-item-text text-muted" style="font-size:12px">${auth.getRoleLabel()}</span></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Mi perfil</a></li>
+            <li><a class="dropdown-item" href="perfil.html"><i class="bi bi-person me-2"></i>Mi perfil</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item text-danger" href="#" id="logoutDropdown"><i class="bi bi-box-arrow-left me-2"></i>Cerrar sesión</a></li>
           </ul>
@@ -205,6 +216,8 @@ function formatFechaHora(isoString) {
 function formatEstado(estado) {
   const map = {
     PROGRAMADO:    { label: 'Programado',    css: 'estado-programado' },
+    CANCHA_ACTIVA: { label: 'Cancha activa', css: 'estado-en-curso' },
+    CANCHA_INACTIVA: { label: 'Cancha inactiva', css: 'estado-programado' },
     EN_CURSO:      { label: 'En curso',      css: 'estado-en-curso' },
     FINALIZADO:    { label: 'Finalizado',    css: 'estado-finalizado' },
     CANCELADO:     { label: 'Cancelado',     css: 'estado-cancelado' },

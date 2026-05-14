@@ -1,0 +1,57 @@
+<section class="module-page">
+  <header class="module-header">
+    <div>
+      <span class="module-kicker"><i class="bi bi-person"></i> Cuenta</span>
+      <h2>Mi perfil</h2>
+      <p>Información del usuario autenticado y accesos disponibles según su rol.</p>
+    </div>
+  </header>
+
+  <section class="profile-grid">
+    <article class="module-card profile-card">
+      <div class="profile-avatar">{{ auth.initials() }}</div>
+      <h3>{{ auth.fullName() }}</h3>
+      <span class="soft-chip soft-chip-blue">{{ auth.roleLabel() }}</span>
+
+      <dl class="profile-details">
+        <div>
+          <dt>Usuario</dt>
+          <dd>{{ auth.user()?.username || '—' }}</dd>
+        </div>
+        <div>
+          <dt>Correo</dt>
+          <dd>{{ auth.user()?.correo || '—' }}</dd>
+        </div>
+        <div>
+          <dt>ID interno</dt>
+          <dd>{{ auth.user()?.id || '—' }}</dd>
+        </div>
+        <div>
+          <dt>Rol técnico</dt>
+          <dd>{{ auth.user()?.rol || '—' }}</dd>
+        </div>
+      </dl>
+    </article>
+
+    <app-collapsible-panel
+      kicker="Permisos"
+      title="Accesos de tu rol"
+      description="Permisos principales habilitados en la plataforma"
+      icon="bi-shield-check"
+      [count]="access.length"
+    >
+
+      <div class="access-grid">
+        @for (item of access; track item.title) {
+          <div class="access-card">
+            <span><i [class]="'bi ' + item.icon"></i></span>
+            <div>
+              <strong>{{ item.title }}</strong>
+              <p>{{ item.text }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </app-collapsible-panel>
+  </section>
+</section>

@@ -1,0 +1,35 @@
+<header class="app-topbar">
+  <div>
+    <span class="breadcrumb-label">{{ page.breadcrumb }}</span>
+    <h1>{{ page.title }}</h1>
+  </div>
+
+  <div class="topbar-actions">
+    <label class="search-box">
+      <i class="bi bi-search"></i>
+      <input type="search" placeholder="Buscar partido, árbitro..." />
+    </label>
+
+    <button type="button" class="icon-btn" aria-label="Notificaciones">
+      <i class="bi bi-bell"></i>
+      <span></span>
+    </button>
+
+    <button
+      type="button"
+      class="icon-btn theme-btn"
+      [attr.aria-label]="theme.isDark() ? 'Activar modo claro' : 'Activar modo oscuro'"
+      (click)="theme.toggle()"
+    >
+      <i [class]="theme.isDark() ? 'bi bi-sun' : 'bi bi-moon-stars'"></i>
+    </button>
+
+    <div class="user-pill">
+      <span class="avatar">{{ auth.initials() }}</span>
+      <div>
+        <strong>{{ auth.fullName() }}</strong>
+        <small>{{ auth.roleLabel() }} · {{ todayLabel() }}</small>
+      </div>
+    </div>
+  </div>
+</header>

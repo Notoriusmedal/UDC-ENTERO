@@ -1,0 +1,10 @@
+<a class="quick-action" [routerLink]="action.href">
+  <span [class]="'quick-action-icon quick-action-' + action.tone">
+    <i [class]="'bi ' + action.icon"></i>
+  </span>
+  <span class="quick-action-copy">
+    <strong>{{ action.title }}</strong>
+    <small>{{ action.subtitle }}</small>
+  </span>
+  <i class="bi bi-arrow-right-short quick-action-arrow"></i>
+</a>

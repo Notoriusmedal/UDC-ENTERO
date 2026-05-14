@@ -1,0 +1,36 @@
+<article class="match-card">
+  <div class="d-flex align-items-start justify-content-between gap-3 mb-4">
+    <div class="match-kicker">
+      <i class="bi bi-trophy"></i>
+      {{ match.deporte || 'Deporte' }}
+      <span>·</span>
+      {{ categoryLabel }}
+    </div>
+    <app-status-badge [status]="match.estado || 'programado'" />
+  </div>
+
+  <div class="match-teams">
+    <strong>{{ teams.home }}</strong>
+    <span>vs</span>
+    <strong>{{ teams.away }}</strong>
+  </div>
+
+  <div class="match-meta">
+    <span>
+      <i class="bi bi-calendar2-week"></i>
+      {{ formattedDate }} · {{ formattedTime }}
+    </span>
+    <span>
+      <i class="bi bi-geo-alt"></i>
+      {{ match.lugar || 'Lugar pendiente' }}
+    </span>
+    <span>
+      <i class="bi bi-shield-check"></i>
+      Árbitros {{ refereeCoverage }}
+    </span>
+  </div>
+
+  <a class="btn btn-outline-primary btn-sm mt-4" href="/partidos">
+    Ver detalle
+  </a>
+</article>

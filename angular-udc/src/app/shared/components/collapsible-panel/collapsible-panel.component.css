@@ -1,0 +1,158 @@
+:host {
+  display: block;
+}
+
+.collapsible-panel {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(226, 232, 240, 0.92);
+  border-radius: 28px;
+  box-shadow: var(--app-shadow-md);
+  overflow: hidden;
+}
+
+.collapsible-header {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+  justify-content: space-between;
+  padding: 18px;
+}
+
+.collapsible-trigger {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  display: flex;
+  flex: 1;
+  gap: 13px;
+  min-width: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.panel-icon {
+  align-items: center;
+  background: var(--app-primary-soft);
+  border-radius: 17px;
+  color: var(--app-primary-dark);
+  display: inline-flex;
+  flex: 0 0 46px;
+  font-size: 20px;
+  height: 46px;
+  justify-content: center;
+  width: 46px;
+}
+
+.panel-copy {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+
+.panel-copy small {
+  color: var(--app-primary);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.panel-copy strong {
+  color: var(--app-text);
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.panel-copy em {
+  color: var(--app-muted);
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 650;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.panel-actions {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  gap: 9px;
+}
+
+.panel-count,
+.collapse-button {
+  align-items: center;
+  border-radius: 999px;
+  display: inline-flex;
+  font-weight: 900;
+  justify-content: center;
+}
+
+.panel-count {
+  background: var(--app-primary-soft);
+  color: var(--app-primary-dark);
+  font-size: 12px;
+  min-width: 34px;
+  padding: 8px 10px;
+}
+
+.collapse-button {
+  background: var(--app-surface-soft);
+  border: 1px solid var(--app-border);
+  color: var(--app-muted);
+  height: 38px;
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+  width: 38px;
+}
+
+.collapse-button:hover {
+  background: var(--app-primary-soft);
+  color: var(--app-primary-dark);
+}
+
+.collapse-button i {
+  transition: transform 180ms ease;
+}
+
+.collapsible-panel:not(.is-collapsed) .collapse-button i {
+  transform: rotate(180deg);
+}
+
+.collapsible-body {
+  border-top: 1px solid var(--app-border);
+  padding: 22px;
+}
+
+.collapsible-body.is-hidden {
+  display: none;
+}
+
+.collapsible-panel.is-collapsed {
+  box-shadow: var(--app-shadow-sm);
+}
+
+@media (max-width: 575.98px) {
+  .collapsible-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .panel-actions {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .panel-copy strong,
+  .panel-copy em {
+    white-space: normal;
+  }
+}

@@ -13,14 +13,14 @@ const api = {
     try {
       const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
 
-      if (response.status === 401) {
+      if (response.status === 401 && endpoint !== '/auth/login') {
         auth.logout();
         return null;
       }
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || `Error ${response.status}`);
+        throw new Error(errorData.message || errorData.mensaje || `Error ${response.status}`);
       }
 
       if (response.status === 204) return null;
@@ -53,7 +53,7 @@ const api = {
     getAll:   (params = {}) => api.get(`/partidos?${new URLSearchParams(params)}`),
     getById:  (id)          => api.get(`/partidos/${id}`),
     create:   (data)        => api.post('/partidos', data),
-    update:   (id, data)    => api.put(`/partidos/${id}`, data),
+    update:   (id, data)    => api.patch(`/partidos/${id}`, data),
     delete:   (id)          => api.delete(`/partidos/${id}`),
     proximos: ()            => api.get('/partidos/proximos'),
   },
@@ -83,11 +83,9 @@ const api = {
 
   // ── Usuarios (admin) ──────────────────────────────────
   usuarios: {
-    getAll:  ()          => api.get('/usuarios'),
-    getById: (id)        => api.get(`/usuarios/${id}`),
-    create:  (data)      => api.post('/usuarios', data),
-    update:  (id, data)  => api.put(`/usuarios/${id}`, data),
-    delete:  (id)        => api.delete(`/usuarios/${id}`),
+    getAll:  ()          => api.get('/admin/usuarios'),
+    create:  (data)      => api.post('/admin/usuarios', data),
+    update:  (id, data)  => api.put(`/admin/usuarios/${id}`, data),
   },
 
   // ── Dashboard ─────────────────────────────────────────

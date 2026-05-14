@@ -1,0 +1,258 @@
+<section class="dashboard-page">
+  <div class="dashboard-hero mb-4">
+    <div class="hero-copy">
+      <span class="hero-pill">
+        <i class="bi bi-stars"></i>
+        Panel deportivo
+      </span>
+      <h2>{{ greeting() }}, {{ auth.fullName() }}</h2>
+      <p>Gestiona partidos, árbitros y eventos deportivos de Canarias desde un único lugar.</p>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-date">
+        <i class="bi bi-calendar2-week"></i>
+        {{ todayLabel() }}
+      </div>
+      <div class="hero-sport-card">
+        <span><i class="bi bi-trophy"></i></span>
+        <strong>Temporada activa</strong>
+        <small>Agenda, cobertura y resultados</small>
+      </div>
+    </div>
+  </div>
+
+  @if (error()) {
+    <div class="alert dashboard-alert mb-4" role="alert">
+      <i class="bi bi-exclamation-triangle"></i>
+      {{ error() }}
+    </div>
+  }
+
+  <div class="row g-4 mb-4">
+    @for (card of statCards(); track card.title) {
+      <div class="col-12 col-md-6 col-xl-3">
+        <app-stat-card [card]="card" />
+      </div>
+    }
+  </div>
+
+  <div class="row g-4 align-items-start">
+    <div class="col-12 col-xl-8">
+      @if (featuredMatch(); as match) {
+        <section class="featured-match mb-4">
+          <div class="featured-bg-icon">
+            <i class="bi bi-trophy"></i>
+          </div>
+          <div class="featured-content">
+            <span class="section-kicker">Partido destacado</span>
+            <div class="featured-header">
+              <div>
+                <h3>{{ matchTitle(match) }}</h3>
+                <p>{{ matchCategory(match) }} · {{ match.deporte || 'Deporte' }}</p>
+              </div>
+              <app-status-badge [status]="match.estado || 'programado'" />
+            </div>
+
+            <div class="featured-meta">
+              <span><i class="bi bi-calendar2-week"></i>{{ matchDate(match) }}</span>
+              <span><i class="bi bi-geo-alt"></i>{{ matchPlace(match) }}</span>
+              <span><i class="bi bi-shield-check"></i>Árbitros {{ refereeCoverage(match) }}</span>
+            </div>
+
+            <div class="coverage-line" aria-label="Cobertura arbitral">
+              <span [style.width.%]="coveragePercent(match)"></span>
+            </div>
+
+            <a class="btn btn-primary btn-sm mt-3" href="/partidos">
+              Ver detalle
+              <i class="bi bi-arrow-right-short ms-1"></i>
+            </a>
+          </div>
+        </section>
+      }
+
+      <app-collapsible-panel
+        kicker="Agenda"
+        title="Próximos partidos"
+        description="Agenda deportiva de los siguientes encuentros"
+        icon="bi-calendar-event"
+        [count]="visibleMatches().length"
+      >
+        <a panel-actions class="btn btn-outline-primary btn-sm" href="/partidos">Ver todos</a>
+
+        @if (loading()) {
+          <div class="loading-panel">
+            <span class="spinner-border spinner-border-sm"></span>
+            Cargando partidos...
+          </div>
+        } @else if (visibleMatches().length) {
+          <div class="table-responsive d-none d-lg-block">
+            <table class="table align-middle match-table mb-0">
+              <thead>
+                <tr>
+                  <th>Partido</th>
+                  <th>Deporte</th>
+                  <th>Fecha</th>
+                  <th>Lugar</th>
+                  <th>Árbitros</th>
+                  <th>Estado</th>
+                  <th class="text-end">Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (match of visibleMatches(); track match.id) {
+                  <tr>
+                    <td>
+                      <div class="match-name">{{ matchTitle(match) }}</div>
+                      <div class="match-subtitle">{{ matchCategory(match) }}</div>
+                    </td>
+                    <td>
+                      <span class="sport-chip">
+                        <i class="bi bi-trophy"></i>
+                        {{ match.deporte || 'Deporte' }}
+                      </span>
+                    </td>
+                    <td>{{ matchDate(match) }}</td>
+                    <td>{{ match.lugar || 'Lugar pendiente' }}</td>
+                    <td>
+                      <span class="coverage-chip">{{ refereeCoverage(match) }}</span>
+                    </td>
+                    <td>
+                      <app-status-badge [status]="match.estado || 'programado'" />
+                    </td>
+                    <td class="text-end">
+                      <a class="action-button" href="/partidos" aria-label="Ver partido">
+                        <i class="bi bi-arrow-right"></i>
+                      </a>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+
+          <div class="d-grid gap-3 d-lg-none">
+            @for (match of visibleMatches(); track match.id) {
+              <app-match-card [match]="match" />
+            }
+          </div>
+        } @else {
+          <app-empty-state
+            icon="bi-calendar2-check"
+            title="No hay próximos partidos"
+            description="Cuando se creen encuentros aparecerán aquí de forma automática."
+            actionLabel="Crear partido"
+            actionHref="/partidos"
+          />
+        }
+      </app-collapsible-panel>
+    </div>
+
+    <div class="col-12 col-xl-4">
+      <div class="side-stack">
+        <app-collapsible-panel
+          kicker="Cobertura"
+          title="Pendientes de asignar"
+          description="Partidos que necesitan atención"
+          icon="bi-person-plus"
+          [count]="pendingAssignments().length"
+        >
+
+          @if (visiblePending().length) {
+            <div class="pending-list">
+              @for (item of visiblePending(); track pendingTitle(item) + pendingDate(item)) {
+                <a class="pending-item" href="/asignaciones">
+                  <span class="pending-icon">
+                    <i class="bi bi-person-plus"></i>
+                  </span>
+                  <span class="pending-copy">
+                    <strong>{{ pendingTitle(item) }}</strong>
+                    <small>{{ item.partido?.deporte || 'Deporte' }} · {{ pendingDate(item) }}</small>
+                  </span>
+                  <i class="bi bi-chevron-right"></i>
+                </a>
+              }
+            </div>
+          } @else {
+            <app-empty-state
+              icon="bi-check2-circle"
+              title="Sin asignaciones pendientes"
+              description="La cobertura arbitral está al día."
+            />
+          }
+        </app-collapsible-panel>
+
+        <app-collapsible-panel
+          kicker="Atajos"
+          title="Acciones rápidas"
+          description="Accesos principales según tu rol"
+          icon="bi-lightning-charge"
+          [count]="quickActions().length"
+        >
+
+          <div class="d-grid gap-3">
+            @for (action of quickActions(); track action.title) {
+              <app-quick-action-card [action]="action" />
+            }
+          </div>
+        </app-collapsible-panel>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4 mt-1">
+    <div class="col-12 col-xl-7">
+      <app-collapsible-panel
+        kicker="Resultados"
+        title="Resultados recientes"
+        description="Marcadores para dar sensación deportiva"
+        icon="bi-trophy"
+        [count]="recentResults.length"
+      >
+
+        <div class="results-list">
+          @for (result of recentResults; track result.home + result.away) {
+            <article class="result-item">
+              <span [class]="'result-mark result-mark-' + result.tone">
+                <i class="bi bi-lightning-charge"></i>
+              </span>
+              <div class="result-teams">
+                <strong>{{ result.home }}</strong>
+                <small>{{ result.meta }}</small>
+                <strong>{{ result.away }}</strong>
+              </div>
+              <span class="result-score">{{ result.score }}</span>
+            </article>
+          }
+        </div>
+      </app-collapsible-panel>
+    </div>
+
+    <div class="col-12 col-xl-5">
+      <app-collapsible-panel
+        kicker="Actividad"
+        title="Actividad deportiva"
+        description="Estado reciente del sistema"
+        icon="bi-activity"
+        [count]="activity.length"
+      >
+        <app-status-badge panel-actions status="sin_conflictos" />
+
+        <div class="activity-grid">
+          @for (item of activity; track item.title) {
+            <article class="activity-item">
+              <span [class]="'activity-icon activity-icon-' + item.tone">
+                <i [class]="'bi ' + item.icon"></i>
+              </span>
+              <div>
+                <strong>{{ item.title }}</strong>
+                <p>{{ item.detail }}</p>
+              </div>
+            </article>
+          }
+        </div>
+      </app-collapsible-panel>
+    </div>
+  </div>
+</section>

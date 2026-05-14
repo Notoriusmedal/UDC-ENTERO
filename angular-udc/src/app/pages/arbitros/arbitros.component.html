@@ -1,0 +1,214 @@
+<section class="module-page">
+  <header class="module-header">
+    <div>
+      <span class="module-kicker"><i class="bi bi-person-badge"></i> Colegio arbitral</span>
+      <h2>Árbitros</h2>
+      <p>Controla disponibilidad, categoría, competencias y carga de partidos de cada árbitro.</p>
+    </div>
+    @if (canManage) {
+      <a class="btn btn-primary" href="#arbitroForm"><i class="bi bi-plus-lg me-1"></i> Nuevo árbitro</a>
+    }
+  </header>
+
+  <div class="module-metrics">
+    <article class="mini-stat">
+      <span class="mini-stat-icon mini-stat-blue"><i class="bi bi-person-badge"></i></span>
+      <span><strong>{{ metrics().total }}</strong><span>Árbitros activos</span></span>
+    </article>
+    <article class="mini-stat">
+      <span class="mini-stat-icon mini-stat-green"><i class="bi bi-check2-circle"></i></span>
+      <span><strong>{{ metrics().disponibles }}</strong><span>Disponibles</span></span>
+    </article>
+    <article class="mini-stat">
+      <span class="mini-stat-icon mini-stat-blue"><i class="bi bi-award"></i></span>
+      <span><strong>{{ metrics().altaCategoria }}</strong><span>Regional/Nacional</span></span>
+    </article>
+    <article class="mini-stat">
+      <span class="mini-stat-icon mini-stat-yellow"><i class="bi bi-speedometer"></i></span>
+      <span><strong>{{ metrics().bajaCarga }}</strong><span>Baja carga</span></span>
+    </article>
+  </div>
+
+  @if (error()) {
+    <div class="alert dashboard-alert" role="alert"><i class="bi bi-exclamation-triangle"></i>{{ error() }}</div>
+  }
+
+  <app-collapsible-panel
+    kicker="Filtros"
+    title="Filtrar árbitros"
+    description="Localiza árbitros por disponibilidad o categoría"
+    icon="bi-sliders"
+  >
+    <button panel-actions class="btn btn-outline-primary btn-sm" type="button" (click)="load()">Actualizar</button>
+
+    <div class="filters-grid">
+      <input class="form-control" placeholder="Buscar árbitro..." [(ngModel)]="filters.q" (keyup.enter)="load()" />
+      <select class="form-select" [(ngModel)]="filters.disponibilidad" (change)="load()">
+        <option value="">Todas las disponibilidades</option>
+        <option value="DISPONIBLE">Disponible</option>
+        <option value="NO_DISPONIBLE">No disponible</option>
+      </select>
+      <select class="form-select" [(ngModel)]="filters.categoria" (change)="load()">
+        <option value="">Todas las categorías</option>
+        <option value="LOCAL">Local</option>
+        <option value="PROVINCIAL">Provincial</option>
+        <option value="REGIONAL">Regional</option>
+        <option value="NACIONAL">Nacional</option>
+      </select>
+      <button class="btn btn-primary" type="button" (click)="load()">Aplicar filtros</button>
+    </div>
+  </app-collapsible-panel>
+
+  @if (canManage) {
+    <app-collapsible-panel
+      id="arbitroForm"
+      kicker="Gestión"
+      [title]="editingId() ? 'Editar árbitro' : 'Crear árbitro'"
+      description="Los árbitros nuevos reciben contraseña inicial 1234 desde el backend"
+      icon="bi-person-plus"
+    >
+      @if (editingId()) {
+        <button panel-actions class="btn btn-outline-primary btn-sm" type="button" (click)="cancelEdit()">Cancelar edición</button>
+      }
+
+      <form class="row g-3" (ngSubmit)="save()">
+        <div class="col-12 col-md-6">
+          <label class="form-label">Nombre</label>
+          <input class="form-control" required [(ngModel)]="form.nombre" name="nombre" />
+        </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label">Apellidos</label>
+          <input class="form-control" required [(ngModel)]="form.apellidos" name="apellidos" />
+        </div>
+        <div class="col-12 col-md-4">
+          <label class="form-label">Email</label>
+          <input class="form-control" type="email" [(ngModel)]="form.email" name="email" />
+        </div>
+        <div class="col-12 col-md-4">
+          <label class="form-label">Teléfono</label>
+          <input class="form-control" [(ngModel)]="form.telefono" name="telefono" />
+        </div>
+        <div class="col-12 col-md-4">
+          <label class="form-label">DNI</label>
+          <input class="form-control" [(ngModel)]="form.dni" name="dni" />
+        </div>
+        <div class="col-12 col-md-4">
+          <label class="form-label">Categoría</label>
+          <select class="form-select" [(ngModel)]="form.categoria" name="categoria">
+            <option value="LOCAL">Local</option>
+            <option value="PROVINCIAL">Provincial</option>
+            <option value="REGIONAL">Regional</option>
+            <option value="NACIONAL">Nacional</option>
+          </select>
+        </div>
+        <div class="col-12 col-md-4">
+          <label class="form-label">Disponibilidad</label>
+          <select class="form-select" [(ngModel)]="form.disponibilidad" name="disponibilidad">
+            <option value="DISPONIBLE">Disponible</option>
+            <option value="NO_DISPONIBLE">No disponible</option>
+          </select>
+        </div>
+        <div class="col-12 col-md-4">
+          <label class="form-label">Licencia</label>
+          <input class="form-control" [(ngModel)]="form.licencia" name="licencia" />
+        </div>
+        <div class="col-12">
+          <label class="form-label">Competencias</label>
+          <input class="form-control" placeholder="FUTBOL, BALONCESTO" [(ngModel)]="form.competenciasInput" name="competencias" />
+        </div>
+        <div class="col-12">
+          <label class="form-label">Observaciones</label>
+          <textarea class="form-control" rows="2" [(ngModel)]="form.observaciones" name="observaciones"></textarea>
+        </div>
+        <div class="col-12 d-flex justify-content-end">
+          <button class="btn btn-primary" type="submit" [disabled]="saving()">
+            {{ saving() ? 'Guardando...' : (editingId() ? 'Actualizar árbitro' : 'Crear árbitro') }}
+          </button>
+        </div>
+      </form>
+    </app-collapsible-panel>
+  }
+
+  <app-collapsible-panel
+    kicker="Listado"
+    title="Árbitros encontrados"
+    description="Disponibilidad, categoría y carga de trabajo"
+    icon="bi-list-ul"
+    [count]="arbitros().length"
+    [defaultCollapsed]="false"
+  >
+
+    @if (loading()) {
+      <div class="loading-panel"><span class="spinner-border spinner-border-sm"></span>Cargando árbitros...</div>
+    } @else if (arbitros().length) {
+      <div class="table-responsive d-none d-lg-block">
+        <table class="table modern-table align-middle mb-0">
+          <thead>
+            <tr>
+              <th>Árbitro</th>
+              <th>Categoría</th>
+              <th>Competencias</th>
+              <th>Partidos</th>
+              <th>Disponibilidad</th>
+              <th class="text-end">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (arbitro of arbitros(); track arbitro.id) {
+              <tr>
+                <td>
+                  <div class="table-title">{{ fullName(arbitro) }}</div>
+                  <div class="table-subtitle">{{ arbitro.email || 'Sin email' }} · {{ arbitro.telefono || 'Sin teléfono' }}</div>
+                </td>
+                <td><span class="soft-chip soft-chip-blue">{{ arbitro.categoria || 'Sin categoría' }}</span></td>
+                <td>{{ (arbitro.competencias || []).join(', ') || 'Sin competencias' }}</td>
+                <td><span class="soft-chip">{{ arbitro.totalPartidos ?? 0 }}</span></td>
+                <td><app-status-badge [status]="arbitro.disponibilidad || 'NO_DISPONIBLE'" /></td>
+                <td class="text-end">
+                  @if (canManage) {
+                    <div class="d-inline-flex gap-2">
+                      <button class="icon-action" type="button" (click)="toggle(arbitro)" aria-label="Disponibilidad"><i class="bi bi-arrow-repeat"></i></button>
+                      <button class="icon-action" type="button" (click)="edit(arbitro)" aria-label="Editar"><i class="bi bi-pencil"></i></button>
+                      <button class="icon-action danger" type="button" (click)="remove(arbitro)" aria-label="Eliminar"><i class="bi bi-trash"></i></button>
+                    </div>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="responsive-cards d-lg-none">
+        @for (arbitro of arbitros(); track arbitro.id) {
+          <article class="mobile-record">
+            <div class="mobile-record-header">
+              <div>
+                <div class="table-title">{{ fullName(arbitro) }}</div>
+                <div class="table-subtitle">{{ arbitro.email || 'Sin email' }}</div>
+              </div>
+              <app-status-badge [status]="arbitro.disponibilidad || 'NO_DISPONIBLE'" />
+            </div>
+
+            <div class="mobile-record-meta">
+              <span><i class="bi bi-award"></i>{{ arbitro.categoria || 'Sin categoría' }}</span>
+              <span><i class="bi bi-trophy"></i>{{ (arbitro.competencias || []).join(', ') || 'Sin competencias' }}</span>
+              <span><i class="bi bi-calendar-check"></i>{{ arbitro.totalPartidos ?? 0 }} partidos</span>
+              <span><i class="bi bi-telephone"></i>{{ arbitro.telefono || 'Sin teléfono' }}</span>
+            </div>
+
+            @if (canManage) {
+              <div class="mobile-record-actions">
+                <button class="icon-action" type="button" (click)="toggle(arbitro)" aria-label="Disponibilidad"><i class="bi bi-arrow-repeat"></i></button>
+                <button class="icon-action" type="button" (click)="edit(arbitro)" aria-label="Editar"><i class="bi bi-pencil"></i></button>
+                <button class="icon-action danger" type="button" (click)="remove(arbitro)" aria-label="Eliminar"><i class="bi bi-trash"></i></button>
+              </div>
+            }
+          </article>
+        }
+      </div>
+    } @else {
+      <app-empty-state icon="bi-person-badge" title="No hay árbitros" description="Crea árbitros o cambia los filtros actuales." />
+    }
+  </app-collapsible-panel>
+</section>

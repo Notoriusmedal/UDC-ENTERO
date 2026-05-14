@@ -1,0 +1,140 @@
+.profile-grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: minmax(280px, 0.36fr) 1fr;
+}
+
+.profile-card {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.profile-avatar {
+  align-items: center;
+  background: linear-gradient(135deg, var(--app-primary), var(--app-accent));
+  border-radius: 30px;
+  box-shadow: var(--app-shadow-md);
+  color: #ffffff;
+  display: flex;
+  font-size: 32px;
+  font-weight: 850;
+  height: 104px;
+  justify-content: center;
+  margin-bottom: 18px;
+  width: 104px;
+}
+
+.profile-card h3 {
+  color: var(--app-text);
+  font-size: 24px;
+  font-weight: 850;
+  margin: 0 0 10px;
+}
+
+.profile-details {
+  display: grid;
+  gap: 12px;
+  margin: 24px 0 0;
+  text-align: left;
+  width: 100%;
+}
+
+.profile-details div {
+  background: #ffffff;
+  border: 1px solid var(--app-border);
+  border-radius: 16px;
+  padding: 12px 14px;
+}
+
+.profile-details dt {
+  color: var(--app-muted);
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 2px;
+}
+
+.profile-details dd {
+  color: var(--app-text);
+  font-size: 14px;
+  font-weight: 750;
+  margin: 0;
+}
+
+.access-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.access-card {
+  align-items: flex-start;
+  background: #ffffff;
+  border: 1px solid var(--app-border);
+  border-radius: 20px;
+  display: flex;
+  gap: 14px;
+  padding: 18px;
+}
+
+.access-card span {
+  align-items: center;
+  background: var(--app-primary-soft);
+  border-radius: 16px;
+  color: var(--app-primary-dark);
+  display: inline-flex;
+  flex: 0 0 46px;
+  height: 46px;
+  justify-content: center;
+  width: 46px;
+}
+
+.access-card strong {
+  color: var(--app-text);
+  display: block;
+  font-weight: 850;
+  margin-bottom: 3px;
+}
+
+.access-card p {
+  color: var(--app-muted);
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+}
+
+:host-context([data-theme="dark"]) .profile-card,
+:host-context([data-theme="dark"]) .access-card {
+  background: rgba(17, 24, 39, 0.88);
+  border-color: var(--app-border);
+}
+
+:host-context([data-theme="dark"]) .profile-details div {
+  background: rgba(15, 23, 42, 0.86);
+  border-color: rgba(148, 163, 184, 0.24);
+}
+
+:host-context([data-theme="dark"]) .profile-details dt {
+  color: #aab4c3;
+}
+
+:host-context([data-theme="dark"]) .profile-details dd {
+  color: #f8fafc;
+}
+
+:host-context([data-theme="dark"]) .access-card span {
+  background: rgba(90, 167, 255, 0.16);
+  color: var(--app-primary-dark);
+}
+
+:host-context([data-theme="dark"]) .profile-avatar {
+  box-shadow: 0 22px 60px rgba(0, 199, 190, 0.2);
+}
+
+@media (max-width: 991.98px) {
+  .profile-grid,
+  .access-grid {
+    grid-template-columns: 1fr;
+  }
+}

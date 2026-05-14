@@ -1,0 +1,38 @@
+<section class="collapsible-panel" [class.is-collapsed]="collapsed">
+  <header class="collapsible-header">
+    <button
+      class="collapsible-trigger"
+      type="button"
+      [attr.aria-expanded]="!collapsed"
+      (click)="toggle()"
+    >
+      <span class="panel-icon">
+        <i [class]="'bi ' + icon"></i>
+      </span>
+
+      <span class="panel-copy">
+        @if (kicker) {
+          <small>{{ kicker }}</small>
+        }
+        <strong>{{ title }}</strong>
+        @if (description) {
+          <em>{{ description }}</em>
+        }
+      </span>
+    </button>
+
+    <div class="panel-actions">
+      <ng-content select="[panel-actions]" />
+      @if (count !== null && count !== undefined) {
+        <span class="panel-count">{{ count }}</span>
+      }
+      <button class="collapse-button" type="button" (click)="toggle()" [attr.aria-label]="collapsed ? 'Desplegar' : 'Plegar'">
+        <i class="bi bi-chevron-down"></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="collapsible-body" [class.is-hidden]="collapsed">
+    <ng-content />
+  </div>
+</section>

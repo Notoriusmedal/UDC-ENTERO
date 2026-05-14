@@ -6,6 +6,7 @@ const auth = {
   ROLES: {
     ADMIN:        'ADMIN',
     COORDINADOR:  'COORDINADOR',
+    COORDINADOR_ARBITROS: 'COORDINADOR_ARBITROS',
     ORGANIZADOR:  'ORGANIZADOR',
     ARBITRO:      'ARBITRO',
   },
@@ -22,13 +23,24 @@ const auth = {
     // Intentar login real contra el backend
     try {
       const data = await api.auth.login({ username, password });
-      if (data?.token) {
-        localStorage.setItem(auth.TOKEN_KEY, data.token);
-        localStorage.setItem(auth.USER_KEY, JSON.stringify(data.user));
+      const token = data?.accessToken ?? data?.token;
+      if (token) {
+        localStorage.setItem(auth.TOKEN_KEY, token);
+
+        const me = await api.auth.me().catch(() => null);
+        const user = auth.normalizeUser({
+          ...me,
+          username: me?.username ?? data.username,
+          rol: me?.rol ?? data.rol,
+        });
+
+        localStorage.setItem(auth.USER_KEY, JSON.stringify(user));
         return true;
       }
-    } catch {
-      // Backend no disponible → usar mock
+    } catch (err) {
+      const offline = /No se puede conectar|Failed to fetch|NetworkError/i.test(err.message ?? '');
+      if (!offline) return false;
+      // Backend no disponible → usar mock local
     }
 
     // Fallback: usuarios de prueba locales
@@ -39,8 +51,21 @@ const auth = {
 
     localStorage.setItem(auth.TOKEN_KEY, `mock-token-${mock.id}`);
     const { password: _, username: __, ...user } = mock;
-    localStorage.setItem(auth.USER_KEY, JSON.stringify(user));
+    localStorage.setItem(auth.USER_KEY, JSON.stringify(auth.normalizeUser(user)));
     return true;
+  },
+
+  normalizeUser(user = {}) {
+    const rol = user.rol === 'COORDINADOR_ARBITROS' ? 'COORDINADOR' : user.rol;
+    return {
+      id: user.id,
+      username: user.username,
+      nombre: user.nombre,
+      apellidos: user.apellidos,
+      correo: user.correo ?? user.email,
+      rol,
+      backendRol: user.rol,
+    };
   },
 
   logout() {
@@ -86,6 +111,7 @@ const auth = {
     const labels = {
       ADMIN:       'Administrador',
       COORDINADOR: 'Coordinador',
+      COORDINADOR_ARBITROS: 'Coordinador',
       ORGANIZADOR: 'Organizador',
       ARBITRO:     'Árbitro',
     };

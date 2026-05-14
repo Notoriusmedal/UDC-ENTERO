@@ -1,0 +1,11 @@
+<div class="empty-state">
+  <div class="empty-icon">
+    <i [class]="'bi ' + icon"></i>
+  </div>
+  <h3>{{ title }}</h3>
+  <p>{{ description }}</p>
+
+  @if (actionLabel && actionHref) {
+    <a class="btn btn-outline-primary btn-sm" [href]="actionHref">{{ actionLabel }}</a>
+  }
+</div>

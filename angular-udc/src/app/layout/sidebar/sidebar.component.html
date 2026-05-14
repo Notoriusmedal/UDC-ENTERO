@@ -1,0 +1,48 @@
+<aside class="app-sidebar">
+  <div class="sidebar-brand">
+    <span class="brand-mark">
+      <img src="/assets/icons/LOGO SIN LETRAS UDC.png" alt="UDC" />
+    </span>
+    <div>
+      <strong>UDC</strong>
+      <small>Deporte Canarias</small>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <span class="nav-section">Principal</span>
+    @for (item of mainItems; track item.label) {
+      @if (canShow(item)) {
+        <a [routerLink]="item.link" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <i [class]="'bi ' + item.icon"></i>
+          <span>{{ item.label }}</span>
+        </a>
+      }
+    }
+
+    <span class="nav-section mt-3">Administración</span>
+    @for (item of adminItems; track item.label) {
+      @if (canShow(item)) {
+        <a [routerLink]="item.link" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <i [class]="'bi ' + item.icon"></i>
+          <span>{{ item.label }}</span>
+        </a>
+      }
+    }
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="user-mini">
+      <span class="avatar">{{ auth.initials() }}</span>
+      <div>
+        <strong>{{ auth.fullName() }}</strong>
+        <small>{{ auth.roleLabel() }}</small>
+      </div>
+    </div>
+
+    <button type="button" class="logout-btn" (click)="auth.logout()">
+      <i class="bi bi-box-arrow-left"></i>
+      <span>Cerrar sesión</span>
+    </button>
+  </div>
+</aside>

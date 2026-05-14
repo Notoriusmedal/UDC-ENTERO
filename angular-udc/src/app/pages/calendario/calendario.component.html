@@ -1,0 +1,116 @@
+<section class="module-page">
+  <header class="module-header">
+    <div>
+      <span class="module-kicker"><i class="bi bi-calendar3"></i> Agenda visual</span>
+      <h2>Calendario</h2>
+      <p>Vista agenda clara y responsive, sin el calendario blanco difícil de leer del modo oscuro anterior.</p>
+    </div>
+    <button class="btn btn-outline-primary" type="button" (click)="load()">
+      <i class="bi bi-arrow-clockwise me-1"></i> Actualizar
+    </button>
+  </header>
+
+  <div class="module-metrics">
+    <article class="mini-stat">
+      <span class="mini-stat-icon mini-stat-blue"><i class="bi bi-calendar3"></i></span>
+      <span><strong>{{ metrics().total }}</strong><span>Partidos en agenda</span></span>
+    </article>
+    <article class="mini-stat">
+      <span class="mini-stat-icon mini-stat-green"><i class="bi bi-calendar2-week"></i></span>
+      <span><strong>{{ metrics().dias }}</strong><span>Días con actividad</span></span>
+    </article>
+    <article class="mini-stat">
+      <span class="mini-stat-icon mini-stat-blue"><i class="bi bi-clock"></i></span>
+      <span><strong>{{ metrics().programados }}</strong><span>Programados</span></span>
+    </article>
+    <article class="mini-stat">
+      <span class="mini-stat-icon mini-stat-red"><i class="bi bi-broadcast"></i></span>
+      <span><strong>{{ metrics().directo }}</strong><span>En directo</span></span>
+    </article>
+  </div>
+
+  @if (error()) {
+    <div class="alert dashboard-alert" role="alert"><i class="bi bi-exclamation-triangle"></i>{{ error() }}</div>
+  }
+
+  <app-collapsible-panel
+    kicker="Filtros"
+    title="Filtrar calendario"
+    description="La agenda se agrupa por día y funciona mejor en móvil"
+    icon="bi-sliders"
+  >
+    <div class="filters-grid">
+      <select class="form-select" [(ngModel)]="filters.estado" (change)="load()">
+        <option value="">Todos los estados</option>
+        <option value="PROGRAMADO">Programado</option>
+        <option value="EN_CURSO">En directo</option>
+        <option value="FINALIZADO">Finalizado</option>
+        <option value="CANCELADO">Cancelado</option>
+      </select>
+      <select class="form-select" [(ngModel)]="filters.deporte" (change)="load()">
+        <option value="">Todos los deportes</option>
+        <option value="FUTBOL">Fútbol</option>
+        <option value="BALONCESTO">Baloncesto</option>
+        <option value="VOLEIBOL">Voleibol</option>
+        <option value="BALONMANO">Balonmano</option>
+      </select>
+      <button class="btn btn-primary" type="button" (click)="load()">Aplicar</button>
+    </div>
+  </app-collapsible-panel>
+
+  @if (loading()) {
+    <section class="module-card">
+      <div class="loading-panel"><span class="spinner-border spinner-border-sm"></span>Cargando calendario...</div>
+    </section>
+  } @else if (grouped.length) {
+    <div class="calendar-agenda">
+      @for (group of grouped; track group.key) {
+        <section class="agenda-day">
+          <div class="agenda-date">
+            <span>{{ group.label }}</span>
+            <small>{{ group.matches.length }} partidos</small>
+          </div>
+
+          <div class="agenda-list">
+            @for (match of group.matches; track match.id) {
+              <article class="agenda-item">
+                <div class="agenda-time">{{ timeLabel(match) }}</div>
+                <div class="agenda-main">
+                  <div class="d-flex flex-wrap align-items-start justify-content-between gap-2">
+                    <div>
+                      <div class="table-title">{{ title(match) }}</div>
+                      <div class="table-subtitle">{{ match.deporte || 'Deporte' }} · {{ match.competicion || 'Competición general' }}</div>
+                    </div>
+                    <app-status-badge [status]="match.estado || 'PROGRAMADO'" />
+                  </div>
+                  <div class="agenda-meta">
+                    <span><i class="bi bi-geo-alt"></i>{{ match.lugar || 'Lugar pendiente' }}</span>
+                    <span><i class="bi bi-shield-check"></i>Árbitros {{ coverage(match) }}</span>
+                  </div>
+                </div>
+              </article>
+            }
+          </div>
+        </section>
+      }
+    </div>
+  } @else {
+    <section class="module-card">
+      <app-empty-state icon="bi-calendar2-check" title="Sin partidos en la agenda" description="Crea partidos o ajusta los filtros para ver la agenda." />
+    </section>
+  }
+
+  <app-collapsible-panel
+    kicker="Móvil"
+    title="Cards móviles"
+    description="Otra representación rápida para revisar encuentros"
+    icon="bi-phone"
+    class="d-lg-none"
+  >
+    <div class="responsive-cards">
+      @for (match of partidos(); track match.id) {
+        <app-match-card [match]="match" />
+      }
+    </div>
+  </app-collapsible-panel>
+</section>

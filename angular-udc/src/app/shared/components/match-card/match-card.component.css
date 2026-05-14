@@ -1,0 +1,66 @@
+:host {
+  display: block;
+}
+
+.match-card {
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: 22px;
+  box-shadow: var(--app-shadow-sm);
+  padding: 20px;
+}
+
+.match-kicker {
+  align-items: center;
+  color: var(--app-muted);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 12px;
+  font-weight: 800;
+  gap: 7px;
+}
+
+.match-kicker i {
+  color: var(--app-accent);
+}
+
+.match-teams {
+  display: grid;
+  gap: 4px;
+}
+
+.match-teams strong {
+  color: var(--app-text);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+
+.match-teams span {
+  color: var(--app-muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.match-meta {
+  border-top: 1px solid var(--app-border);
+  color: var(--app-muted);
+  display: grid;
+  font-size: 13px;
+  font-weight: 650;
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 18px;
+}
+
+.match-meta span {
+  align-items: center;
+  display: flex;
+  gap: 9px;
+}
+
+.match-meta i {
+  color: var(--app-primary);
+}

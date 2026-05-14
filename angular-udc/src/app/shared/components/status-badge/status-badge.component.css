@@ -1,0 +1,68 @@
+:host {
+  display: inline-flex;
+}
+
+.status-badge {
+  align-items: center;
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 800;
+  gap: 7px;
+  letter-spacing: 0;
+  line-height: 1;
+  padding: 8px 11px;
+  white-space: nowrap;
+}
+
+.status-dot {
+  border-radius: 999px;
+  display: inline-flex;
+  height: 7px;
+  width: 7px;
+}
+
+.status-primary {
+  background: var(--app-primary-soft);
+  color: var(--app-primary-dark);
+}
+
+.status-primary .status-dot {
+  background: var(--app-primary);
+}
+
+.status-success {
+  background: var(--app-success-soft);
+  color: #15803d;
+}
+
+.status-success .status-dot {
+  background: #22c55e;
+}
+
+.status-warning {
+  background: var(--app-warning-soft);
+  color: #a16207;
+}
+
+.status-warning .status-dot {
+  background: var(--app-warning);
+}
+
+.status-danger {
+  background: var(--app-danger-soft);
+  color: #b91c1c;
+}
+
+.status-danger .status-dot {
+  background: var(--app-danger);
+}
+
+.status-neutral {
+  background: #eef2f7;
+  color: #475569;
+}
+
+.status-neutral .status-dot {
+  background: #94a3b8;
+}

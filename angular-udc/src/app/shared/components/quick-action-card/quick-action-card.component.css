@@ -1,0 +1,85 @@
+:host {
+  display: block;
+}
+
+.quick-action {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid var(--app-border);
+  border-radius: 18px;
+  box-shadow: var(--app-shadow-sm);
+  color: var(--app-text);
+  display: flex;
+  gap: 14px;
+  padding: 14px;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.quick-action:hover {
+  border-color: rgba(10, 132, 255, 0.24);
+  box-shadow: var(--app-shadow-md);
+  color: var(--app-text);
+  transform: translateY(-2px);
+}
+
+.quick-action-icon {
+  align-items: center;
+  border-radius: 15px;
+  display: inline-flex;
+  flex: 0 0 44px;
+  font-size: 20px;
+  height: 44px;
+  justify-content: center;
+  width: 44px;
+}
+
+.quick-action-blue {
+  background: var(--app-primary-soft);
+  color: var(--app-primary-dark);
+}
+
+.quick-action-green {
+  background: var(--app-success-soft);
+  color: #15803d;
+}
+
+.quick-action-yellow {
+  background: var(--app-warning-soft);
+  color: #a16207;
+}
+
+.quick-action-red {
+  background: var(--app-danger-soft);
+  color: #b91c1c;
+}
+
+.quick-action-neutral {
+  background: #eef2f7;
+  color: #475569;
+}
+
+.quick-action-copy {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+
+.quick-action-copy strong {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.quick-action-copy small {
+  color: var(--app-muted);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.quick-action-arrow {
+  color: var(--app-muted);
+  font-size: 22px;
+  margin-left: auto;
+}
