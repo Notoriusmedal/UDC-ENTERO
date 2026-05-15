@@ -59,8 +59,19 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(5, 12, 24, 0.86), rgba(5, 12, 24, 0.5) 48%, rgba(5, 12, 24, 0.76)),
-    linear-gradient(180deg, rgba(5, 12, 24, 0.08), rgba(5, 12, 24, 0.78));
+    linear-gradient(90deg, rgba(5, 12, 24, 0.7), rgba(5, 12, 24, 0.24) 48%, rgba(5, 12, 24, 0.58)),
+    linear-gradient(180deg, rgba(5, 12, 24, 0.04), rgba(5, 12, 24, 0.5));
+}
+
+.auth-brand {
+  position: absolute;
+  top: clamp(24px, 4vw, 56px);
+  left: clamp(24px, 4vw, 64px);
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  width: fit-content;
 }
 
 .auth-intro {
@@ -95,21 +106,21 @@
 }
 
 .brand-mark {
-  width: 44px;
-  height: 44px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(14px);
+  width: 54px;
+  height: 54px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  backdrop-filter: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .brand-mark img {
-  width: 82%;
-  height: 82%;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
 }
 
@@ -136,15 +147,26 @@
   line-height: 1.02;
   font-weight: 850;
   letter-spacing: 0;
+  text-shadow: 0 18px 48px rgba(0, 0, 0, 0.42);
 }
 
 .auth-copy p {
-  max-width: 450px;
-  margin: 18px 0 0;
-  color: rgba(255, 255, 255, 0.74);
-  font-size: 15px;
+  max-width: 560px;
+  margin: 22px 0 0;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 18px;
   font-weight: 600;
   line-height: 1.55;
+  text-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+.auth-copy span {
+  display: block;
+  margin-top: 12px;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 14px;
+  font-weight: 700;
+  text-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
 }
 
 .slide-meta {
@@ -168,12 +190,15 @@
   grid-column: 2;
   justify-self: end;
   width: 100%;
-  border: 1px solid rgba(229, 231, 235, 0.82);
-  border-radius: 28px;
-  padding: 26px;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: var(--app-shadow-md);
-  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 30px;
+  padding: 30px;
+  background: rgba(10, 18, 32, 0.58);
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(28px) saturate(135%);
+  color: #ffffff;
 }
 
 .auth-card-header {
@@ -187,8 +212,8 @@
   width: 44px;
   height: 44px;
   border-radius: 15px;
-  background: var(--app-success-soft);
-  color: #15803d;
+  background: rgba(48, 209, 88, 0.16);
+  color: #52df7b;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -196,6 +221,7 @@
 }
 
 .auth-card h2 {
+  color: #ffffff;
   margin: 0;
   font-size: 25px;
   font-weight: 850;
@@ -203,7 +229,7 @@
 
 .auth-card p {
   margin: 3px 0 0;
-  color: var(--app-muted);
+  color: rgba(255, 255, 255, 0.68);
   font-size: 14px;
 }
 
@@ -213,29 +239,80 @@
 }
 
 .form-label-group span {
-  color: var(--app-text);
+  color: #ffffff;
   font-size: 13px;
   font-weight: 700;
 }
 
 .form-control {
-  border-radius: var(--app-radius-md);
-  border-color: var(--app-border);
-  min-height: 54px;
+  border-radius: 18px;
+  border-color: rgba(255, 255, 255, 0.16);
+  min-height: 56px;
+  background: rgba(10, 18, 32, 0.56);
+  color: #ffffff;
+}
+
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.42);
 }
 
 .form-control:focus {
-  border-color: var(--app-primary);
-  box-shadow: 0 0 0 0.25rem rgba(10, 132, 255, 0.12);
+  background: rgba(10, 18, 32, 0.72);
+  border-color: rgba(90, 167, 255, 0.72);
+  color: #ffffff;
+  box-shadow: 0 0 0 0.25rem rgba(90, 167, 255, 0.16);
 }
 
 .btn-primary {
-  --bs-btn-bg: var(--app-primary);
-  --bs-btn-border-color: var(--app-primary);
-  --bs-btn-hover-bg: var(--app-primary-dark);
-  --bs-btn-hover-border-color: var(--app-primary-dark);
-  border-radius: var(--app-radius-md);
+  --bs-btn-bg: transparent;
+  --bs-btn-border-color: transparent;
+  --bs-btn-hover-bg: transparent;
+  --bs-btn-hover-border-color: transparent;
+  min-height: 56px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #5aa7ff, #2775f6 52%, #0a84ff);
+  border: 0;
+  box-shadow: 0 18px 36px rgba(10, 132, 255, 0.3);
+  font-weight: 850;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 24px 46px rgba(10, 132, 255, 0.38);
+  filter: saturate(1.08);
+}
+
+.login-note {
+  margin: -2px 0 0;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 12px;
   font-weight: 700;
+  text-align: center;
+}
+
+.auth-carousel-indicators {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: clamp(18px, 3vw, 34px);
+  display: inline-flex;
+  gap: 9px;
+  transform: translateX(-50%);
+}
+
+.auth-carousel-indicators span {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.36);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+  transition:
+    width 180ms ease,
+    background-color 180ms ease;
+}
+
+.auth-carousel-indicators span.is-active {
+  width: 24px;
+  background: #ffffff;
 }
 
 .app-shell {

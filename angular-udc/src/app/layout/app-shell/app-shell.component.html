@@ -2,7 +2,7 @@
   <main class="auth-page">
     <section class="auth-carousel" aria-label="Presentación de UDC Deporte Canarias">
       <div class="carousel-track">
-        @for (slide of authSlides; track slide.title; let index = $index) {
+        @for (slide of authSlides; track slide.image; let index = $index) {
           <article class="carousel-slide" [class.is-active]="activeSlide() === index">
             <img [src]="slide.image" [alt]="slide.meta" [style.object-position]="slide.position" />
             <div class="carousel-shade"></div>
@@ -11,9 +11,21 @@
       </div>
     </section>
 
+    <div class="auth-brand" aria-label="UDC Deporte Canarias">
+      <span class="brand-mark">
+        <img src="/assets/icons/LOGO SIN LETRAS UDC.png" alt="UDC" />
+      </span>
+      <div>
+        <strong>UDC</strong>
+        <small>Deporte Canarias</small>
+      </div>
+    </div>
+
     <section class="auth-intro" aria-label="UDC Deporte Canarias">
       <div class="auth-copy">
         <h1>Todo el deporte canario,<br />en un solo lugar.</h1>
+        <p>Partidos, árbitros, calendarios y resultados conectados en una única plataforma.</p>
+        <span>Gestión deportiva para clubes, árbitros y administradores.</span>
       </div>
     </section>
 
@@ -49,8 +61,16 @@
             Entrar al panel
           }
         </button>
+
+        <p class="login-note">Acceso solo para usuarios autorizados</p>
       </form>
     </section>
+
+    <div class="auth-carousel-indicators" aria-hidden="true">
+      @for (indicator of carouselIndicators; track indicator; let index = $index) {
+        <span [class.is-active]="activeIndicator() === index"></span>
+      }
+    </div>
   </main>
 } @else {
   <div class="app-shell">

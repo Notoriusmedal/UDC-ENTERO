@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
@@ -27,6 +27,8 @@ export class AppShellComponent implements OnInit, OnDestroy {
     password: 'admin',
   };
   readonly activeSlide = signal(0);
+  readonly carouselIndicators = [0, 1, 2, 3];
+  readonly activeIndicator = computed(() => this.activeSlide() % this.carouselIndicators.length);
   readonly authSlides: AuthSlide[] = [
     {
       image: '/assets/images/foto-teide.avif',
