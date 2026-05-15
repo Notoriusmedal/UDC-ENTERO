@@ -102,6 +102,16 @@ export type UsuarioAdmin = {
   convocableParaSeleccionArbitral?: boolean;
 };
 
+export type Notificacion = {
+  id: number;
+  tipo?: string;
+  titulo?: string;
+  mensaje?: string;
+  partidoId?: number;
+  leida?: boolean;
+  creadoEn?: string;
+};
+
 export type StatCardVm = {
   title: string;
   value: string | number;

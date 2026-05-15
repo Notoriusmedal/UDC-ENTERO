@@ -7,6 +7,7 @@ import {
   DashboardStats,
   LoginResponse,
   Match,
+  Notificacion,
   PendingAssignment,
   User,
   UsuarioAdmin,
@@ -34,6 +35,14 @@ export class ApiService {
 
   dashboardActividad(): Promise<unknown[]> {
     return this.get<unknown[]>('/dashboard/actividad');
+  }
+
+  notificaciones(): Promise<Notificacion[]> {
+    return this.get<Notificacion[]>('/notificaciones');
+  }
+
+  marcarNotificacionLeida(id: number | string): Promise<Notificacion> {
+    return this.patch<Notificacion>(`/notificaciones/${id}/leida`, {});
   }
 
   partidos(params: Record<string, string | number | boolean | undefined> = {}): Promise<Match[]> {

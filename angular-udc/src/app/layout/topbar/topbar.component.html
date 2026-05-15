@@ -10,10 +10,73 @@
       <input type="search" placeholder="Buscar partido, árbitro..." />
     </label>
 
-    <button type="button" class="icon-btn" aria-label="Notificaciones">
-      <i class="bi bi-bell"></i>
-      <span></span>
-    </button>
+    <div class="notifications-wrap">
+      <button
+        type="button"
+        class="icon-btn notification-btn"
+        [class.is-active]="notificationsOpen()"
+        [class.has-unread]="unreadCount() > 0"
+        aria-label="Notificaciones"
+        [attr.aria-expanded]="notificationsOpen()"
+        (click)="toggleNotifications()"
+      >
+        <i class="bi bi-bell"></i>
+        @if (unreadCount() > 0) {
+          <span class="notification-dot">{{ unreadCount() > 9 ? '9+' : unreadCount() }}</span>
+        }
+      </button>
+
+      @if (notificationsOpen()) {
+        <section class="notifications-panel">
+          <div class="notifications-header">
+            <div>
+              <strong>Notificaciones</strong>
+              <small>{{ unreadCount() }} sin leer</small>
+            </div>
+            <button class="panel-refresh" type="button" (click)="loadNotifications()" aria-label="Actualizar notificaciones">
+              <i class="bi bi-arrow-clockwise"></i>
+            </button>
+          </div>
+
+          @if (loadingNotifications()) {
+            <div class="notifications-state">
+              <span class="spinner-border spinner-border-sm"></span>
+              Cargando...
+            </div>
+          } @else if (notificationsError()) {
+            <div class="notifications-state error">
+              <i class="bi bi-exclamation-triangle"></i>
+              {{ notificationsError() }}
+            </div>
+          } @else if (notifications().length) {
+            <div class="notifications-list">
+              @for (notification of notifications(); track notification.id) {
+                <button
+                  class="notification-item"
+                  type="button"
+                  [class.is-read]="notification.leida"
+                  (click)="markAsRead(notification)"
+                >
+                  <span class="notification-icon">
+                    <i [class]="'bi ' + notificationIcon(notification.tipo)"></i>
+                  </span>
+                  <span class="notification-copy">
+                    <strong>{{ notification.titulo || 'Notificación' }}</strong>
+                    <small>{{ notification.mensaje || 'Sin detalle adicional' }}</small>
+                    <em>{{ notificationDate(notification.creadoEn) }}</em>
+                  </span>
+                </button>
+              }
+            </div>
+          } @else {
+            <div class="notifications-state">
+              <i class="bi bi-check2-circle"></i>
+              No tienes notificaciones.
+            </div>
+          }
+        </section>
+      }
+    </div>
 
     <button
       type="button"
@@ -28,7 +91,6 @@
       <span class="avatar">{{ auth.initials() }}</span>
       <div>
         <strong>{{ auth.fullName() }}</strong>
-        <small>{{ auth.roleLabel() }} · {{ todayLabel() }}</small>
       </div>
     </div>
   </div>

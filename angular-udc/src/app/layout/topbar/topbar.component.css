@@ -72,15 +72,165 @@ h1 {
   transform: translateY(-1px);
 }
 
-.icon-btn span {
-  position: absolute;
-  top: 9px;
-  right: 10px;
-  width: 7px;
-  height: 7px;
-  border-radius: 999px;
+.notifications-wrap {
+  position: relative;
+}
+
+.notification-dot {
+  align-items: center;
   background: var(--app-danger);
   border: 2px solid var(--app-surface);
+  border-radius: 999px;
+  color: #ffffff;
+  display: inline-flex;
+  font-size: 9px;
+  font-weight: 900;
+  height: 18px;
+  justify-content: center;
+  min-width: 18px;
+  padding: 0 4px;
+  position: absolute;
+  right: -1px;
+  top: -2px;
+}
+
+.notification-btn.is-active,
+.notification-btn.has-unread {
+  border-color: rgba(10, 132, 255, 0.28);
+  color: var(--app-primary-dark);
+}
+
+.notifications-panel {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--app-border);
+  border-radius: 24px;
+  box-shadow: var(--app-shadow-lg);
+  min-width: 360px;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 12px);
+  z-index: 30;
+}
+
+.notifications-header {
+  align-items: center;
+  border-bottom: 1px solid var(--app-border);
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.notifications-header strong,
+.notification-copy strong {
+  color: var(--app-text);
+  display: block;
+  font-weight: 900;
+}
+
+.notifications-header small {
+  color: var(--app-muted);
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.panel-refresh {
+  align-items: center;
+  background: var(--app-surface-soft);
+  border: 1px solid var(--app-border);
+  border-radius: 999px;
+  color: var(--app-muted);
+  display: inline-flex;
+  height: 36px;
+  justify-content: center;
+  width: 36px;
+}
+
+.panel-refresh:hover {
+  color: var(--app-primary-dark);
+}
+
+.notifications-list {
+  display: grid;
+  max-height: 390px;
+  overflow: auto;
+  padding: 8px;
+}
+
+.notification-item {
+  align-items: flex-start;
+  background: transparent;
+  border: 0;
+  border-radius: 18px;
+  color: inherit;
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  text-align: left;
+}
+
+.notification-item:hover {
+  background: var(--app-surface-soft);
+}
+
+.notification-item:not(.is-read) {
+  background: var(--app-primary-soft);
+}
+
+.notification-icon {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid var(--app-border);
+  border-radius: 15px;
+  color: var(--app-primary-dark);
+  display: inline-flex;
+  flex: 0 0 42px;
+  height: 42px;
+  justify-content: center;
+  width: 42px;
+}
+
+.notification-copy {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.notification-copy strong {
+  font-size: 14px;
+}
+
+.notification-copy small {
+  color: var(--app-muted);
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.notification-copy em {
+  color: var(--app-primary-dark);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 800;
+  margin-top: 3px;
+}
+
+.notifications-state {
+  align-items: center;
+  color: var(--app-muted);
+  display: flex;
+  font-size: 13px;
+  font-weight: 750;
+  gap: 9px;
+  justify-content: center;
+  min-height: 136px;
+  padding: 18px;
+  text-align: center;
+}
+
+.notifications-state.error {
+  color: #b91c1c;
 }
 
 .theme-btn {
@@ -149,5 +299,16 @@ h1 {
   .user-pill div,
   .search-box {
     display: none;
+  }
+
+  .notifications-wrap {
+    position: static;
+  }
+
+  .notifications-panel {
+    left: 14px;
+    min-width: 0;
+    right: 14px;
+    top: 76px;
   }
 }

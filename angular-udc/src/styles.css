@@ -280,9 +280,21 @@ textarea {
 :root[data-theme="dark"] .user-pill,
 :root[data-theme="dark"] .user-mini,
 :root[data-theme="dark"] .collapse-button,
+:root[data-theme="dark"] .notifications-panel,
+:root[data-theme="dark"] .notification-icon,
+:root[data-theme="dark"] .panel-refresh,
 :root[data-theme="dark"] .empty-icon {
   background: rgba(17, 24, 39, 0.92);
   border-color: var(--app-border);
+}
+
+:root[data-theme="dark"] .notification-item:hover,
+:root[data-theme="dark"] .panel-refresh {
+  background: rgba(30, 41, 59, 0.88);
+}
+
+:root[data-theme="dark"] .notification-item:not(.is-read) {
+  background: rgba(90, 167, 255, 0.14);
 }
 
 :root[data-theme="dark"] .brand-mark,
