@@ -1,4 +1,5 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { ApiService } from '../../core/api.service';
 import { AuthService } from '../../core/auth.service';
 import { DashboardStats, Match, PendingAssignment, QuickActionVm, StatCardVm } from '../../core/models';
@@ -16,6 +17,7 @@ import { StatusBadgeComponent } from '../../shared/components/status-badge/statu
     EmptyStateComponent,
     MatchCardComponent,
     QuickActionCardComponent,
+    RouterLink,
     StatCardComponent,
     StatusBadgeComponent,
   ],
@@ -149,21 +151,18 @@ export class DashboardComponent implements OnInit {
       away: 'UDC Sur',
       score: '2 - 1',
       meta: 'Fútbol · Liga Insular',
-      tone: 'blue',
     },
     {
       home: 'CB Laguna',
       away: 'Gran Canaria B',
       score: '68 - 64',
       meta: 'Baloncesto · Senior femenino',
-      tone: 'green',
     },
     {
       home: 'Arona Voley',
       away: 'Telde VC',
       score: '3 - 2',
       meta: 'Voleibol · Juvenil',
-      tone: 'yellow',
     },
   ];
 
@@ -256,6 +255,10 @@ export class DashboardComponent implements OnInit {
 
   matchPlace(match: Match): string {
     return match.lugar || 'Lugar pendiente';
+  }
+
+  teamLogo(index: number): string {
+    return `/assets/images/logo-equipo-${index}.png`;
   }
 
   pendingTitle(item: PendingAssignment): string {

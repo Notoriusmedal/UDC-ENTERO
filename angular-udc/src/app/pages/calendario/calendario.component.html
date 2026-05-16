@@ -99,18 +99,4 @@
       <app-empty-state icon="bi-calendar2-check" title="Sin partidos en la agenda" description="Crea partidos o ajusta los filtros para ver la agenda." />
     </section>
   }
-
-  <app-collapsible-panel
-    kicker="Móvil"
-    title="Cards móviles"
-    description="Otra representación rápida para revisar encuentros"
-    icon="bi-phone"
-    class="d-lg-none"
-  >
-    <div class="responsive-cards">
-      @for (match of partidos(); track match.id) {
-        <app-match-card [match]="match" />
-      }
-    </div>
-  </app-collapsible-panel>
 </section>

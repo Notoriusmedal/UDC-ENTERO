@@ -71,7 +71,7 @@
         <button panel-actions class="btn btn-outline-primary btn-sm" type="button" (click)="cancelEdit()">Cancelar edición</button>
       }
 
-      <form class="row g-3" (ngSubmit)="save()">
+      <form class="row g-3" #arbitroFormRef="ngForm" (ngSubmit)="arbitroFormRef.valid && save()" novalidate>
         <div class="col-12 col-md-6">
           <label class="form-label">Nombre</label>
           <input class="form-control" required [(ngModel)]="form.nombre" name="nombre" />
@@ -121,7 +121,7 @@
           <textarea class="form-control" rows="2" [(ngModel)]="form.observaciones" name="observaciones"></textarea>
         </div>
         <div class="col-12 d-flex justify-content-end">
-          <button class="btn btn-primary" type="submit" [disabled]="saving()">
+          <button class="btn btn-primary" type="submit" [disabled]="arbitroFormRef.invalid || saving()">
             {{ saving() ? 'Guardando...' : (editingId() ? 'Actualizar árbitro' : 'Crear árbitro') }}
           </button>
         </div>

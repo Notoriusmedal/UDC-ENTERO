@@ -3,13 +3,15 @@
 }
 
 .stat-card {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.88)),
-    radial-gradient(circle at top right, rgba(10, 132, 255, 0.1), transparent 11rem);
-  border: 1px solid rgba(226, 232, 240, 0.9);
-  border-radius: 28px;
-  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
-  min-height: 178px;
+  align-items: flex-start;
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: 22px;
+  box-shadow: var(--app-shadow-sm);
+  display: grid;
+  gap: 0 18px;
+  grid-template-columns: 48px minmax(0, 1fr);
+  min-height: 156px;
   overflow: hidden;
   padding: 24px;
   position: relative;
@@ -19,101 +21,60 @@
     border-color 180ms ease;
 }
 
-.stat-card::after {
-  background: linear-gradient(135deg, rgba(10, 132, 255, 0.12), rgba(0, 199, 190, 0.08));
-  border-radius: 999px;
-  content: "";
-  height: 132px;
-  position: absolute;
-  right: -66px;
-  top: -78px;
-  width: 132px;
-}
-
 .stat-card:hover {
-  border-color: rgba(10, 132, 255, 0.22);
-  box-shadow: 0 28px 70px rgba(15, 23, 42, 0.12);
-  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--app-primary) 16%, var(--app-border));
+  box-shadow: var(--app-shadow-md);
+  transform: translateY(-2px);
 }
 
 .stat-icon {
   align-items: center;
-  border-radius: 20px;
+  border-radius: 14px;
   display: inline-flex;
-  font-size: 24px;
-  height: 56px;
+  font-size: 22px;
+  height: 48px;
   justify-content: center;
-  position: relative;
-  width: 56px;
-  z-index: 1;
+  width: 48px;
 }
 
 .stat-icon-blue {
-  background: var(--app-primary-soft);
-  color: var(--app-primary-dark);
+  background: linear-gradient(135deg, #6aa7ff, var(--app-primary));
+  color: #ffffff;
 }
 
 .stat-icon-green {
-  background: var(--app-success-soft);
-  color: #15803d;
+  background: linear-gradient(135deg, #34d399, #16a34a);
+  color: #ffffff;
 }
 
 .stat-icon-yellow {
-  background: var(--app-warning-soft);
-  color: #a16207;
+  background: linear-gradient(135deg, #fb923c, #f97316);
+  color: #ffffff;
 }
 
 .stat-icon-red {
-  background: var(--app-danger-soft);
-  color: #b91c1c;
+  background: linear-gradient(135deg, #fb7185, #ef4444);
+  color: #ffffff;
 }
 
 .stat-icon-neutral {
-  background: #eef2f7;
-  color: #475569;
+  background: var(--app-surface-muted);
+  color: var(--app-text-soft);
 }
 
-.stat-chip {
-  align-self: flex-start;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 800;
-  line-height: 1;
-  padding: 8px 10px;
-  position: relative;
-  z-index: 1;
-}
-
-.stat-chip-blue,
-.stat-chip-neutral {
-  background: var(--app-primary-soft);
-  color: var(--app-primary-dark);
-}
-
-.stat-chip-green {
-  background: var(--app-success-soft);
-  color: #15803d;
-}
-
-.stat-chip-yellow {
-  background: var(--app-warning-soft);
-  color: #a16207;
-}
-
-.stat-chip-red {
-  background: var(--app-danger-soft);
-  color: #b91c1c;
+.stat-content {
+  min-width: 0;
 }
 
 .stat-label {
-  color: var(--app-muted);
+  color: var(--app-text-soft);
   font-size: 13px;
-  font-weight: 800;
+  font-weight: 850;
 }
 
 .stat-value {
   color: var(--app-text);
-  font-size: 38px;
+  font-size: 34px;
   font-weight: 900;
   letter-spacing: 0;
   line-height: 1;
@@ -123,15 +84,47 @@
   color: var(--app-muted);
   font-size: 13px;
   font-weight: 650;
-  max-width: 16rem;
+  line-height: 1.35;
+  max-width: 14rem;
 }
 
-.stat-subtitle::after {
-  background: linear-gradient(90deg, var(--app-primary), rgba(0, 199, 190, 0.72));
+.stat-progress {
+  align-self: end;
+  background: var(--app-surface-muted);
   border-radius: 999px;
-  content: "";
   display: block;
+  grid-column: 1 / -1;
   height: 4px;
-  margin-top: 16px;
-  width: 48px;
+  margin-top: 20px;
+  overflow: hidden;
+  position: relative;
+  width: 132px;
+}
+
+.stat-progress::before {
+  border-radius: inherit;
+  content: "";
+  inset: 0 auto 0 0;
+  position: absolute;
+  width: 44%;
+}
+
+.stat-progress-blue::before {
+  background: var(--app-primary);
+}
+
+.stat-progress-green::before {
+  background: var(--app-green);
+}
+
+.stat-progress-yellow::before {
+  background: var(--app-orange);
+}
+
+.stat-progress-red::before {
+  background: var(--app-red);
+}
+
+.stat-progress-neutral::before {
+  background: var(--app-muted);
 }

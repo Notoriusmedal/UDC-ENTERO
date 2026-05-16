@@ -6,6 +6,6 @@
   <p>{{ description }}</p>
 
   @if (actionLabel && actionHref) {
-    <a class="btn btn-outline-primary btn-sm" [href]="actionHref">{{ actionLabel }}</a>
+    <a class="btn btn-outline-primary btn-sm" [routerLink]="actionHref">{{ actionLabel }}</a>
   }
 </div>

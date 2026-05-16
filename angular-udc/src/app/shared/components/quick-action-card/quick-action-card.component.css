@@ -4,25 +4,27 @@
 
 .quick-action {
   align-items: center;
-  background: #ffffff;
-  border: 1px solid var(--app-border);
+  background: var(--app-surface-soft);
+  border: 1px solid var(--app-border-soft);
   border-radius: 18px;
-  box-shadow: var(--app-shadow-sm);
+  box-shadow: none;
   color: var(--app-text);
   display: flex;
   gap: 14px;
   padding: 14px;
   transition:
+    background 180ms ease,
     border-color 180ms ease,
     box-shadow 180ms ease,
     transform 180ms ease;
 }
 
 .quick-action:hover {
-  border-color: rgba(10, 132, 255, 0.24);
-  box-shadow: var(--app-shadow-md);
+  background: var(--app-primary-soft);
+  border-color: color-mix(in srgb, var(--app-primary) 16%, transparent);
+  box-shadow: var(--app-shadow-sm);
   color: var(--app-text);
-  transform: translateY(-2px);
+  transform: translateX(2px);
 }
 
 .quick-action-icon {
@@ -42,23 +44,23 @@
 }
 
 .quick-action-green {
-  background: var(--app-success-soft);
-  color: #15803d;
+  background: var(--app-green-soft);
+  color: color-mix(in srgb, var(--app-green) 68%, var(--app-text));
 }
 
 .quick-action-yellow {
-  background: var(--app-warning-soft);
-  color: #a16207;
+  background: var(--app-yellow-soft);
+  color: color-mix(in srgb, var(--app-yellow) 52%, var(--app-text));
 }
 
 .quick-action-red {
-  background: var(--app-danger-soft);
-  color: #b91c1c;
+  background: var(--app-red-soft);
+  color: color-mix(in srgb, var(--app-red) 74%, var(--app-text));
 }
 
 .quick-action-neutral {
-  background: #eef2f7;
-  color: #475569;
+  background: var(--app-surface-muted);
+  color: var(--app-text-soft);
 }
 
 .quick-action-copy {
@@ -69,7 +71,7 @@
 
 .quick-action-copy strong {
   font-size: 14px;
-  font-weight: 800;
+  font-weight: 850;
 }
 
 .quick-action-copy small {

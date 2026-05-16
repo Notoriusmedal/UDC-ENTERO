@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Match } from '../../../core/models';
 import { StatusBadgeComponent } from '../status-badge/status-badge.component';
 
 @Component({
   selector: 'app-match-card',
-  imports: [StatusBadgeComponent],
+  imports: [RouterLink, StatusBadgeComponent],
   templateUrl: './match-card.component.html',
   styleUrl: './match-card.component.css',
 })

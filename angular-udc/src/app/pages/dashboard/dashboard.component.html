@@ -14,10 +14,13 @@
         <i class="bi bi-calendar2-week"></i>
         {{ todayLabel() }}
       </div>
-      <div class="hero-sport-card">
-        <span><i class="bi bi-trophy"></i></span>
-        <strong>Temporada activa</strong>
-        <small>Agenda, cobertura y resultados</small>
+      <div class="hero-landscape" aria-hidden="true">
+        <span class="sun"></span>
+        <span class="mountain mountain-back"></span>
+        <span class="mountain mountain-front"></span>
+        <span class="island island-left"></span>
+        <span class="island island-right"></span>
+        <span class="plant"></span>
       </div>
     </div>
   </div>
@@ -41,9 +44,6 @@
     <div class="col-12 col-xl-8">
       @if (featuredMatch(); as match) {
         <section class="featured-match mb-4">
-          <div class="featured-bg-icon">
-            <i class="bi bi-trophy"></i>
-          </div>
           <div class="featured-content">
             <span class="section-kicker">Partido destacado</span>
             <div class="featured-header">
@@ -64,7 +64,19 @@
               <span [style.width.%]="coveragePercent(match)"></span>
             </div>
 
-            <a class="btn btn-primary btn-sm mt-3" href="/partidos">
+            <div class="featured-teams">
+              <div class="team-crest">
+                <img [src]="teamLogo(1)" [alt]="match.equipoLocal ?? match.equipoLocalNombre ?? 'Equipo local'" />
+                <strong>{{ match.equipoLocal ?? match.equipoLocalNombre ?? 'Equipo local' }}</strong>
+              </div>
+              <span>VS</span>
+              <div class="team-crest">
+                <img [src]="teamLogo(2)" [alt]="match.equipoVisitante ?? match.equipoVisitanteNombre ?? 'Equipo visitante'" />
+                <strong>{{ match.equipoVisitante ?? match.equipoVisitanteNombre ?? 'Equipo visitante' }}</strong>
+              </div>
+            </div>
+
+            <a class="btn btn-app-primary btn-sm mt-3" routerLink="/partidos">
               Ver detalle
               <i class="bi bi-arrow-right-short ms-1"></i>
             </a>
@@ -79,7 +91,7 @@
         icon="bi-calendar-event"
         [count]="visibleMatches().length"
       >
-        <a panel-actions class="btn btn-outline-primary btn-sm" href="/partidos">Ver todos</a>
+        <a panel-actions class="btn btn-app-soft btn-sm" routerLink="/partidos">Ver todos</a>
 
         @if (loading()) {
           <div class="loading-panel">
@@ -101,11 +113,19 @@
                 </tr>
               </thead>
               <tbody>
-                @for (match of visibleMatches(); track match.id) {
+                @for (match of visibleMatches(); track match.id; let index = $index) {
                   <tr>
                     <td>
-                      <div class="match-name">{{ matchTitle(match) }}</div>
-                      <div class="match-subtitle">{{ matchCategory(match) }}</div>
+                      <div class="match-name-row">
+                        <span class="match-logo-pair" aria-hidden="true">
+                          <img [src]="teamLogo((index % 3) * 2 + 1)" alt="" />
+                          <img [src]="teamLogo((index % 3) * 2 + 2)" alt="" />
+                        </span>
+                        <span>
+                          <div class="match-name">{{ matchTitle(match) }}</div>
+                          <div class="match-subtitle">{{ matchCategory(match) }}</div>
+                        </span>
+                      </div>
                     </td>
                     <td>
                       <span class="sport-chip">
@@ -122,7 +142,7 @@
                       <app-status-badge [status]="match.estado || 'programado'" />
                     </td>
                     <td class="text-end">
-                      <a class="action-button" href="/partidos" aria-label="Ver partido">
+                      <a class="action-button" routerLink="/partidos" aria-label="Ver partido">
                         <i class="bi bi-arrow-right"></i>
                       </a>
                     </td>
@@ -162,7 +182,7 @@
           @if (visiblePending().length) {
             <div class="pending-list">
               @for (item of visiblePending(); track pendingTitle(item) + pendingDate(item)) {
-                <a class="pending-item" href="/asignaciones">
+                <a class="pending-item" routerLink="/asignaciones">
                   <span class="pending-icon">
                     <i class="bi bi-person-plus"></i>
                   </span>
@@ -212,10 +232,11 @@
       >
 
         <div class="results-list">
-          @for (result of recentResults; track result.home + result.away) {
+          @for (result of recentResults; track result.home + result.away; let index = $index) {
             <article class="result-item">
-              <span [class]="'result-mark result-mark-' + result.tone">
-                <i class="bi bi-lightning-charge"></i>
+              <span class="result-logos" aria-hidden="true">
+                <img [src]="teamLogo(index * 2 + 1)" alt="" />
+                <img [src]="teamLogo(index * 2 + 2)" alt="" />
               </span>
               <div class="result-teams">
                 <strong>{{ result.home }}</strong>

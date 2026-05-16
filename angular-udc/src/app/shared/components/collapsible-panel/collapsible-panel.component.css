@@ -3,10 +3,10 @@
 }
 
 .collapsible-panel {
-  background: rgba(255, 255, 255, 0.94);
-  border: 1px solid rgba(226, 232, 240, 0.92);
-  border-radius: 28px;
-  box-shadow: var(--app-shadow-md);
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: 26px;
+  box-shadow: var(--app-shadow-sm);
   overflow: hidden;
 }
 
@@ -15,7 +15,7 @@
   display: flex;
   gap: 14px;
   justify-content: space-between;
-  padding: 18px;
+  padding: 20px;
 }
 
 .collapsible-trigger {
@@ -34,7 +34,7 @@
 .panel-icon {
   align-items: center;
   background: var(--app-primary-soft);
-  border-radius: 17px;
+  border-radius: 16px;
   color: var(--app-primary-dark);
   display: inline-flex;
   flex: 0 0 46px;
@@ -54,7 +54,8 @@
   color: var(--app-primary);
   font-size: 11px;
   font-style: normal;
-  font-weight: 900;
+  font-weight: 950;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
@@ -117,6 +118,7 @@
 .collapse-button:hover {
   background: var(--app-primary-soft);
   color: var(--app-primary-dark);
+  transform: translateY(-1px);
 }
 
 .collapse-button i {

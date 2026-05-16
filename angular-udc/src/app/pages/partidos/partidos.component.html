@@ -75,7 +75,7 @@
         <button panel-actions class="btn btn-outline-primary btn-sm" type="button" (click)="cancelEdit()">Cancelar edición</button>
       }
 
-      <form class="row g-3" (ngSubmit)="save()">
+      <form class="row g-3" #partidoFormRef="ngForm" (ngSubmit)="partidoFormRef.valid && save()" novalidate>
         <div class="col-12 col-md-6">
           <label class="form-label">Equipo local</label>
           <input class="form-control" required [(ngModel)]="form.equipoLocal" name="equipoLocal" />
@@ -123,7 +123,7 @@
           <textarea class="form-control" rows="2" [(ngModel)]="form.observaciones" name="observaciones"></textarea>
         </div>
         <div class="col-12 d-flex justify-content-end gap-2">
-          <button class="btn btn-primary" type="submit" [disabled]="saving()">
+          <button class="btn btn-primary" type="submit" [disabled]="partidoFormRef.invalid || saving()">
             {{ saving() ? 'Guardando...' : (editingId() ? 'Actualizar partido' : 'Crear partido') }}
           </button>
         </div>

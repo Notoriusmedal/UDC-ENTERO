@@ -1,15 +1,13 @@
 <article class="stat-card h-100">
-  <div class="d-flex justify-content-between gap-3">
-    <div [class]="'stat-icon stat-icon-' + card.tone">
-      <i [class]="'bi ' + card.icon"></i>
-    </div>
-
-    <span [class]="'stat-chip stat-chip-' + card.tone">{{ card.trend }}</span>
+  <div [class]="'stat-icon stat-icon-' + card.tone">
+    <i [class]="'bi ' + card.icon"></i>
   </div>
 
-  <div class="mt-4">
+  <div class="stat-content">
     <p class="stat-label mb-1">{{ card.title }}</p>
     <h2 class="stat-value mb-2">{{ card.value }}</h2>
     <p class="stat-subtitle mb-0">{{ card.subtitle }}</p>
   </div>
+
+  <span [class]="'stat-progress stat-progress-' + card.tone" aria-hidden="true"></span>
 </article>

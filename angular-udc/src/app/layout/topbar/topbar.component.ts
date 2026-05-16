@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../../core/api.service';
 import { AuthService } from '../../core/auth.service';
@@ -39,15 +39,6 @@ export class TopbarComponent {
 
   ngOnInit(): void {
     void this.loadNotifications();
-  }
-
-  todayLabel(): string {
-    return new Date().toLocaleDateString('es-ES', {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    });
   }
 
   async toggleNotifications(): Promise<void> {

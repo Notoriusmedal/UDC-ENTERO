@@ -13,6 +13,7 @@
   line-height: 1;
   padding: 8px 11px;
   white-space: nowrap;
+  border: 1px solid transparent;
 }
 
 .status-dot {
@@ -32,35 +33,35 @@
 }
 
 .status-success {
-  background: var(--app-success-soft);
-  color: #15803d;
+  background: var(--app-green-soft);
+  color: color-mix(in srgb, var(--app-green) 68%, var(--app-text));
 }
 
 .status-success .status-dot {
-  background: #22c55e;
+  background: var(--app-green);
 }
 
 .status-warning {
-  background: var(--app-warning-soft);
-  color: #a16207;
+  background: var(--app-orange-soft);
+  color: color-mix(in srgb, var(--app-orange) 78%, var(--app-text));
 }
 
 .status-warning .status-dot {
-  background: var(--app-warning);
+  background: var(--app-orange);
 }
 
 .status-danger {
-  background: var(--app-danger-soft);
-  color: #b91c1c;
+  background: var(--app-red-soft);
+  color: color-mix(in srgb, var(--app-red) 74%, var(--app-text));
 }
 
 .status-danger .status-dot {
-  background: var(--app-danger);
+  background: var(--app-red);
 }
 
 .status-neutral {
-  background: #eef2f7;
-  color: #475569;
+  background: var(--app-surface-muted);
+  color: var(--app-text-soft);
 }
 
 .status-neutral .status-dot {

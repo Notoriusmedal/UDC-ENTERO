@@ -38,7 +38,7 @@
       icon="bi-person-plus"
     >
 
-      <form class="row g-3" (ngSubmit)="save()">
+      <form class="row g-3" #asignacionFormRef="ngForm" (ngSubmit)="asignacionFormRef.valid && save()" novalidate>
         <div class="col-12 col-lg-5">
           <label class="form-label">Partido</label>
           <select class="form-select" required [(ngModel)]="form.partidoId" name="partidoId" (change)="sugerencias.set([])">
@@ -74,7 +74,7 @@
           <button class="btn btn-outline-primary" type="button" (click)="sugerir()">
             <i class="bi bi-stars me-1"></i> Sugerir árbitros
           </button>
-          <button class="btn btn-primary" type="submit" [disabled]="saving()">
+          <button class="btn btn-primary" type="submit" [disabled]="asignacionFormRef.invalid || saving()">
             {{ saving() ? 'Guardando...' : 'Crear asignación' }}
           </button>
         </div>

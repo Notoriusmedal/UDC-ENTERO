@@ -4,8 +4,8 @@
 
 .empty-state {
   align-items: center;
-  background: linear-gradient(180deg, rgba(10, 132, 255, 0.05), rgba(0, 199, 190, 0.04));
-  border: 1px dashed rgba(10, 132, 255, 0.28);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--app-primary-soft) 42%, transparent), color-mix(in srgb, var(--app-cyan-soft) 34%, transparent));
+  border: 1px dashed color-mix(in srgb, var(--app-primary) 24%, transparent);
   border-radius: 22px;
   display: flex;
   flex-direction: column;
@@ -16,7 +16,7 @@
 
 .empty-icon {
   align-items: center;
-  background: #ffffff;
+  background: var(--app-surface);
   border: 1px solid var(--app-border);
   border-radius: 18px;
   color: var(--app-primary);

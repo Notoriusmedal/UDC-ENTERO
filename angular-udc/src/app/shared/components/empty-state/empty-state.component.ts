@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-empty-state',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './empty-state.component.html',
   styleUrl: './empty-state.component.css',
 })

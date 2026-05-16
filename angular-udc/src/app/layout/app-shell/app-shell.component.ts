@@ -7,9 +7,6 @@ import { TopbarComponent } from '../topbar/topbar.component';
 
 type AuthSlide = {
   image: string;
-  title: string;
-  description: string;
-  kicker: string;
   meta: string;
   position: string;
 };
@@ -32,57 +29,36 @@ export class AppShellComponent implements OnInit, OnDestroy {
   readonly authSlides: AuthSlide[] = [
     {
       image: '/assets/images/foto-teide.avif',
-      title: 'Gestiona partidos, árbitros y asignaciones con una experiencia clara y moderna.',
-      description: 'Una nueva interfaz Angular pensada para coordinadores, árbitros, clubes y organizadores deportivos de Canarias.',
-      kicker: 'Plataforma deportiva',
       meta: 'Teide · Tenerife',
       position: 'center',
     },
     {
       image: '/assets/images/imagen-portada-1.png',
-      title: 'Gestiona partidos, árbitros y asignaciones con una experiencia clara y moderna.',
-      description: 'Una nueva interfaz Angular pensada para coordinadores, árbitros, clubes y organizadores deportivos de Canarias.',
-      kicker: 'Plataforma deportiva',
       meta: 'Deporte Canarias',
       position: 'center',
     },
     {
       image: '/assets/images/imagen-portada-2.png',
-      title: 'Gestiona partidos, árbitros y asignaciones con una experiencia clara y moderna.',
-      description: 'Una nueva interfaz Angular pensada para coordinadores, árbitros, clubes y organizadores deportivos de Canarias.',
-      kicker: 'Plataforma deportiva',
       meta: 'Partidos y asignaciones',
       position: 'center',
     },
     {
       image: '/assets/images/imagen-portada-3.png',
-      title: 'Gestiona partidos, árbitros y asignaciones con una experiencia clara y moderna.',
-      description: 'Una nueva interfaz Angular pensada para coordinadores, árbitros, clubes y organizadores deportivos de Canarias.',
-      kicker: 'Plataforma deportiva',
       meta: 'Calendario deportivo',
       position: 'center',
     },
     {
       image: '/assets/images/imagen-portada-4.png',
-      title: 'Gestiona partidos, árbitros y asignaciones con una experiencia clara y moderna.',
-      description: 'Una nueva interfaz Angular pensada para coordinadores, árbitros, clubes y organizadores deportivos de Canarias.',
-      kicker: 'Plataforma deportiva',
       meta: 'Coordinación arbitral',
       position: 'center',
     },
     {
       image: '/assets/images/imagen-portada-5.png',
-      title: 'Gestiona partidos, árbitros y asignaciones con una experiencia clara y moderna.',
-      description: 'Una nueva interfaz Angular pensada para coordinadores, árbitros, clubes y organizadores deportivos de Canarias.',
-      kicker: 'Plataforma deportiva',
       meta: 'Jornadas deportivas',
       position: 'center',
     },
     {
       image: '/assets/images/imagen-portada-6.png',
-      title: 'Gestiona partidos, árbitros y asignaciones con una experiencia clara y moderna.',
-      description: 'Una nueva interfaz Angular pensada para coordinadores, árbitros, clubes y organizadores deportivos de Canarias.',
-      kicker: 'Plataforma deportiva',
       meta: 'UDC',
       position: 'center',
     },

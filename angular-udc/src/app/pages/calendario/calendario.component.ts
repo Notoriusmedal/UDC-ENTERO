@@ -4,7 +4,6 @@ import { ApiService } from '../../core/api.service';
 import { Match } from '../../core/models';
 import { CollapsiblePanelComponent } from '../../shared/components/collapsible-panel/collapsible-panel.component';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
-import { MatchCardComponent } from '../../shared/components/match-card/match-card.component';
 import { StatusBadgeComponent } from '../../shared/components/status-badge/status-badge.component';
 
 type DayGroup = {
@@ -15,7 +14,7 @@ type DayGroup = {
 
 @Component({
   selector: 'app-calendario',
-  imports: [FormsModule, CollapsiblePanelComponent, EmptyStateComponent, MatchCardComponent, StatusBadgeComponent],
+  imports: [FormsModule, CollapsiblePanelComponent, EmptyStateComponent, StatusBadgeComponent],
   templateUrl: './calendario.component.html',
   styleUrl: './calendario.component.css',
 })

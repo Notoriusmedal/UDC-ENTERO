@@ -1,13 +1,14 @@
 # Proyecto Frontend UDC
 
-Frontend web para Union Deporte Canaria. La version historica esta hecha con HTML, CSS y JavaScript vanilla. A partir de ahora hay una nueva app Angular en `angular-udc`, conectada al mismo backend Spring Boot del repo `pi-25-26-backend-udc`.
+Frontend web para Union Deporte Canaria. La version final del proyecto esta en `angular-udc`, hecha con Angular y conectada al backend Spring Boot del repo `pi-25-26-backend-udc`.
+
+La version antigua en HTML, CSS y JavaScript vanilla se ha retirado del flujo del proyecto. Para desarrollo, demo y entrega usa siempre la app Angular.
 
 ## Tecnologias
 
-- HTML5, CSS3 y JavaScript.
+- Angular 21.
 - Bootstrap 5 y Bootstrap Icons.
 - API REST en `http://localhost:8080/api`.
-- Angular 21 en `angular-udc`.
 
 ## Arranque local con backend
 
@@ -17,34 +18,14 @@ Frontend web para Union Deporte Canaria. La version historica esta hecha con HTM
 ./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
-2. Arrancar este frontend:
-
-```bash
-python3 -m http.server 8000
-```
-
-3. Abrir:
-
-```text
-http://localhost:8000
-```
-
-## Nueva app Angular
-
-La app Angular esta en:
-
-```text
-angular-udc
-```
-
-Para arrancarla:
+2. Arrancar el frontend Angular:
 
 ```bash
 cd angular-udc
 npx -y node@24 node_modules/@angular/cli/bin/ng serve --host 127.0.0.1 --port 4200
 ```
 
-Abrir:
+3. Abrir:
 
 ```text
 http://localhost:4200

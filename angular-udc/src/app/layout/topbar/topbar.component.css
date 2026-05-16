@@ -1,26 +1,27 @@
 .app-topbar {
-  min-height: 82px;
+  min-height: 76px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  padding: 20px 32px 18px;
-  background: rgba(255, 255, 255, 0.64);
-  backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(229, 231, 235, 0.72);
+  padding: 16px 24px;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(22px);
+  border-bottom: 1px solid var(--app-border);
 }
 
 .breadcrumb-label {
   color: var(--app-muted);
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: 0.01em;
 }
 
 h1 {
   margin: 2px 0 0;
   color: var(--app-text);
   font-size: 20px;
-  font-weight: 800;
+  font-weight: 850;
 }
 
 .topbar-actions {
@@ -30,15 +31,16 @@ h1 {
 }
 
 .search-box {
-  min-width: 320px;
-  height: 46px;
+  min-width: 300px;
+  height: 44px;
   display: flex;
   align-items: center;
   gap: 8px;
   border: 1px solid var(--app-border);
   border-radius: 999px;
   padding: 0 14px;
-  background: rgba(255, 255, 255, 0.82);
+  background: var(--app-surface);
+  box-shadow: var(--app-shadow-sm);
   color: var(--app-muted);
 }
 
@@ -53,12 +55,13 @@ h1 {
 
 .icon-btn {
   position: relative;
-  width: 46px;
-  height: 46px;
+  width: 44px;
+  height: 44px;
   border: 1px solid var(--app-border);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.82);
+  background: var(--app-surface);
   color: var(--app-text);
+  box-shadow: var(--app-shadow-sm);
   transition:
     background 180ms ease,
     border-color 180ms ease,
@@ -67,7 +70,8 @@ h1 {
 }
 
 .icon-btn:hover {
-  border-color: rgba(10, 132, 255, 0.22);
+  background: var(--app-primary-soft);
+  border-color: rgba(37, 99, 235, 0.18);
   color: var(--app-primary-dark);
   transform: translateY(-1px);
 }
@@ -101,9 +105,9 @@ h1 {
 }
 
 .notifications-panel {
-  background: rgba(255, 255, 255, 0.96);
+  background: color-mix(in srgb, var(--app-surface) 94%, transparent);
   border: 1px solid var(--app-border);
-  border-radius: 24px;
+  border-radius: 26px;
   box-shadow: var(--app-shadow-lg);
   min-width: 360px;
   overflow: hidden;
@@ -180,7 +184,7 @@ h1 {
 
 .notification-icon {
   align-items: center;
-  background: #ffffff;
+  background: var(--app-surface);
   border: 1px solid var(--app-border);
   border-radius: 15px;
   color: var(--app-primary-dark);
@@ -238,20 +242,21 @@ h1 {
 }
 
 .user-pill {
-  height: 46px;
+  height: 44px;
   display: flex;
   align-items: center;
   gap: 9px;
   border: 1px solid var(--app-border);
   border-radius: 999px;
   padding: 4px 12px 4px 4px;
-  background: rgba(255, 255, 255, 0.82);
+  background: var(--app-surface);
+  box-shadow: var(--app-shadow-sm);
 }
 
 .avatar {
   width: 34px;
   height: 34px;
-  border-radius: 12px;
+  border-radius: 999px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -270,7 +275,7 @@ h1 {
 .user-pill strong {
   color: var(--app-text);
   font-size: 13px;
-  font-weight: 800;
+  font-weight: 850;
 }
 
 .user-pill small {
