@@ -83,6 +83,8 @@ Build Command: npm run build
 Output Directory: dist/angular-udc/browser
 ```
 
+El repo tambien incluye `vercel.json` en la raiz y en `angular-udc/` para evitar el error `404: NOT_FOUND` de Vercel cuando se despliega un monorepo o cuando Angular genera el `index.html` dentro de `dist/angular-udc/browser`.
+
 ### Backend En Render
 
 Crea un Web Service desde este mismo repo y configura:
