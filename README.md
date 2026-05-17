@@ -1,4 +1,4 @@
-# UDC Entero
+# UDC-ENTERO
 
 Proyecto completo de **UDC / Deporte Canarias** para entrega final.
 
