@@ -16,7 +16,7 @@ import {
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   private readonly http = inject(HttpClient);
-  private readonly apiBase = 'http://localhost:8080/api';
+  private readonly apiBase = this.resolveApiBase();
   private readonly tokenKey = 'udc_token';
 
   login(username: string, password: string): Promise<LoginResponse> {
@@ -195,5 +195,12 @@ export class ApiService {
 
     const value = query.toString();
     return value ? `?${value}` : '';
+  }
+
+  private resolveApiBase(): string {
+    const hostname = window.location.hostname;
+    const isLocal = hostname === 'localhost' || hostname === '127.0.0.1';
+
+    return isLocal ? 'http://localhost:8080/api' : '/api';
   }
 }

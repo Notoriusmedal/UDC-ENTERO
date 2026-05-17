@@ -85,6 +85,14 @@ Output Directory: dist
 
 El repo incluye `package.json` y `vercel.json` en la raiz para evitar el error `404: NOT_FOUND` de Vercel. El build instala el frontend Angular, compila la app y copia el resultado final a una carpeta `dist/` simple, que es la que Vercel debe publicar.
 
+En produccion el frontend llama a `/api`. Vercel reenvia esas llamadas al backend usando la variable de entorno:
+
+```text
+UDC_API_URL=https://TU-BACKEND.onrender.com/api
+```
+
+Si esta variable no existe, el login no podra conectar con el backend.
+
 ### Backend En Render
 
 Crea un Web Service desde este mismo repo y configura:
@@ -95,13 +103,13 @@ Build Command: ./mvnw clean package -DskipTests
 Start Command: java -jar target/*.jar --spring.profiles.active=dev --server.port=$PORT
 ```
 
-Cuando tengas la URL del backend de Render, el frontend debe apuntar a:
+Cuando tengas la URL del backend de Render, configura en Vercel:
 
 ```text
-https://TU-BACKEND.onrender.com/api
+UDC_API_URL=https://TU-BACKEND.onrender.com/api
 ```
 
-Y en Render debes permitir CORS para la URL del frontend:
+Como el frontend usa el proxy `/api` de Vercel, normalmente no hace falta tocar CORS del navegador. Si decides llamar al backend directamente desde Angular, entonces en Render debes permitir CORS para la URL del frontend:
 
 ```text
 CORS_ALLOWED_ORIGIN=https://TU-FRONTEND.vercel.app
