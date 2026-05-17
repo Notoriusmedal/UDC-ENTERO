@@ -1,0 +1,12 @@
+{
+  "name": "udc-entero",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "postinstall": "npm --prefix angular-udc ci",
+    "build": "cd angular-udc && npx -y node@24 node_modules/@angular/cli/bin/ng build --progress=false && cd .. && rm -rf dist && cp -R angular-udc/dist/angular-udc/browser dist"
+  }
+}
