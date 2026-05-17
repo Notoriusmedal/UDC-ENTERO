@@ -1,8 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "npm --prefix angular-udc ci",
-  "buildCommand": "npm --prefix angular-udc run build",
-  "outputDirectory": "angular-udc/dist/angular-udc/browser",
+  "buildCommand": "npm --prefix angular-udc run build && rm -rf dist && cp -R angular-udc/dist/angular-udc/browser dist",
+  "outputDirectory": "dist",
   "rewrites": [
     {
       "source": "/(.*)",

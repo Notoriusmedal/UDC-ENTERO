@@ -77,13 +77,13 @@ Importa este repo y configura:
 
 ```text
 Framework Preset: Angular
-Root Directory: angular-udc
-Install Command: npm install
-Build Command: npm run build
-Output Directory: dist/angular-udc/browser
+Root Directory: ./
+Install Command: npm --prefix angular-udc ci
+Build Command: npm --prefix angular-udc run build && rm -rf dist && cp -R angular-udc/dist/angular-udc/browser dist
+Output Directory: dist
 ```
 
-El repo tambien incluye `vercel.json` en la raiz y en `angular-udc/` para evitar el error `404: NOT_FOUND` de Vercel cuando se despliega un monorepo o cuando Angular genera el `index.html` dentro de `dist/angular-udc/browser`.
+El repo incluye `vercel.json` en la raiz y en `angular-udc/` para evitar el error `404: NOT_FOUND` de Vercel. El build copia el resultado final de Angular a una carpeta `dist/` simple, que es la que Vercel debe publicar.
 
 ### Backend En Render
 
