@@ -64,20 +64,34 @@
     </article>
 
     <div class="match-detail-grid">
-      <article class="detail-card venue-card">
-        <div class="detail-card-header">
-          <span class="detail-icon detail-icon-blue"><i class="bi bi-geo-alt"></i></span>
-          <div>
-            <p class="detail-kicker">Ubicación</p>
-            <h2>{{ match.lugar || 'Lugar pendiente' }}</h2>
+      <div class="detail-card-stack">
+        <article class="detail-card venue-card">
+          <div class="detail-card-header">
+            <span class="detail-icon detail-icon-blue"><i class="bi bi-geo-alt"></i></span>
+            <div>
+              <p class="detail-kicker">Ubicación</p>
+              <h2>{{ match.lugar || 'Lugar pendiente' }}</h2>
+            </div>
           </div>
-        </div>
 
-        <a class="detail-map-button" [href]="mapsUrl(match)" target="_blank" rel="noopener">
-          <i class="bi bi-signpost-2"></i>
-          Ver ruta en Maps
-        </a>
-      </article>
+          <a class="detail-map-button" [href]="mapsUrl(match)" target="_blank" rel="noopener">
+            <i class="bi bi-signpost-2"></i>
+            Ver ruta en Maps
+          </a>
+        </article>
+
+        <article class="detail-card notes-card">
+          <div class="detail-card-header">
+            <span class="detail-icon detail-icon-yellow"><i class="bi bi-card-text"></i></span>
+            <div>
+              <p class="detail-kicker">Observaciones</p>
+              <h2>Notas del partido</h2>
+            </div>
+          </div>
+
+          <p>{{ match.observaciones || 'No hay observaciones adicionales para este encuentro.' }}</p>
+        </article>
+      </div>
 
       <article class="detail-card info-card">
         <div class="detail-card-header">
@@ -122,18 +136,6 @@
           <li><i class="bi bi-bell"></i>Revisa el estado por si hay cambios de última hora.</li>
           <li><i class="bi bi-geo"></i>Usa el mapa para confirmar la ruta antes de salir.</li>
         </ul>
-      </article>
-
-      <article class="detail-card notes-card">
-        <div class="detail-card-header">
-          <span class="detail-icon detail-icon-yellow"><i class="bi bi-card-text"></i></span>
-          <div>
-            <p class="detail-kicker">Observaciones</p>
-            <h2>Notas del partido</h2>
-          </div>
-        </div>
-
-        <p>{{ match.observaciones || 'No hay observaciones adicionales para este encuentro.' }}</p>
       </article>
     </div>
   }

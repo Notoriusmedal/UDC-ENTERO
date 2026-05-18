@@ -186,9 +186,16 @@
 }
 
 .match-detail-grid {
+  align-items: start;
   display: grid;
   gap: 16px;
   grid-template-columns: 1fr;
+}
+
+.detail-card-stack {
+  align-content: start;
+  display: grid;
+  gap: 16px;
 }
 
 .detail-card {
@@ -365,9 +372,5 @@
 
   .match-detail-grid {
     grid-template-columns: minmax(360px, 0.95fr) repeat(2, minmax(0, 1fr));
-  }
-
-  .notes-card {
-    grid-column: span 2;
   }
 }
