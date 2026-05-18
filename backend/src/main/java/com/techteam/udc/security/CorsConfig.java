@@ -22,14 +22,22 @@ public class CorsConfig {
 	@Value("${cors.extra-allowed-origins:}")
 	private String extraAllowedOrigins;
 
+	@Value("${cors.allowed-origin-patterns:https://*.vercel.app}")
+	private String allowedOriginPatterns;
+
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		List<String> origins = Arrays.stream((allowedOrigin + "," + extraAllowedOrigins).split(","))
 				.map(String::trim)
 				.filter(s -> !s.isEmpty())
 				.collect(Collectors.toList());
+		List<String> originPatterns = Arrays.stream(allowedOriginPatterns.split(","))
+				.map(String::trim)
+				.filter(s -> !s.isEmpty())
+				.collect(Collectors.toList());
 		CorsConfiguration config = new CorsConfiguration();
 		config.setAllowedOrigins(origins);
+		config.setAllowedOriginPatterns(originPatterns);
 		config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
 		config.setAllowedHeaders(List.of("*"));
 		config.setExposedHeaders(List.of("Authorization"));

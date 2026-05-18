@@ -16,6 +16,7 @@ import {
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   private readonly http = inject(HttpClient);
+  private readonly productionApiBase = 'https://udc-entero.onrender.com/api';
   private readonly apiBase = this.resolveApiBase();
   private readonly tokenKey = 'udc_token';
 
@@ -201,6 +202,6 @@ export class ApiService {
     const hostname = window.location.hostname;
     const isLocal = hostname === 'localhost' || hostname === '127.0.0.1';
 
-    return isLocal ? 'http://localhost:8080/api' : '/api';
+    return isLocal ? 'http://localhost:8080/api' : this.productionApiBase;
   }
 }

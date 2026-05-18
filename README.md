@@ -122,15 +122,15 @@ Build Command: npm run build
 Output Directory: dist
 ```
 
-El repo incluye `package.json` y `vercel.json` en la raiz para evitar el error `404: NOT_FOUND` de Vercel. El build instala el frontend Angular, compila la app y copia el resultado final a una carpeta `dist/` simple, que es la que Vercel debe publicar. La configuracion de rutas respeta primero los archivos y funciones `/api`, y despues envia el resto a `index.html` para Angular.
+El repo incluye `package.json` y `vercel.json` en la raiz para evitar el error `404: NOT_FOUND` de Vercel. El build instala el frontend Angular, compila la app y copia el resultado final a una carpeta `dist/` simple, que es la que Vercel debe publicar.
 
-En produccion el frontend llama a `/api`. Vercel reenvia esas llamadas al backend usando la variable de entorno:
+En produccion el frontend llama directamente al backend desplegado en Render:
 
 ```text
-UDC_API_URL=https://TU-BACKEND.onrender.com/api
+https://udc-entero.onrender.com/api
 ```
 
-Si esta variable no existe, el login no podra conectar con el backend.
+No hace falta configurar `UDC_API_URL` en Vercel para la demo actual.
 
 ### Backend En Render
 
@@ -156,16 +156,16 @@ Build Command: ./mvnw clean package -DskipTests
 Start Command: java -jar target/*.jar --spring.profiles.active=dev --server.port=$PORT
 ```
 
-Cuando tengas la URL del backend de Render, configura en Vercel:
+Cuando tengas la URL del backend de Render, comprueba que el frontend apunta a esa URL en:
 
 ```text
-UDC_API_URL=https://TU-BACKEND.onrender.com/api
+angular-udc/src/app/core/api.service.ts
 ```
 
-Como el frontend usa el proxy `/api` de Vercel, normalmente no hace falta tocar CORS del navegador. Si decides llamar al backend directamente desde Angular, entonces en Render debes permitir CORS para la URL del frontend:
+El backend permite por defecto origenes de Vercel con:
 
 ```text
-CORS_ALLOWED_ORIGIN=https://TU-FRONTEND.vercel.app
+cors.allowed-origin-patterns=https://*.vercel.app
 ```
 
 ## Builds
