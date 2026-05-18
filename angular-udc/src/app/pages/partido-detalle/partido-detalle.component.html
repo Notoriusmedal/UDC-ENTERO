@@ -73,15 +73,7 @@
           </div>
         </div>
 
-        <div class="map-preview">
-          <span class="map-pin"><i class="bi bi-geo-alt-fill"></i></span>
-          <div>
-            <strong>{{ match.lugar || 'Instalación por confirmar' }}</strong>
-            <span>Canarias</span>
-          </div>
-        </div>
-
-        <a class="btn btn-app-primary detail-map-button" [href]="mapsUrl(match)" target="_blank" rel="noopener">
+        <a class="detail-map-button" [href]="mapsUrl(match)" target="_blank" rel="noopener">
           <i class="bi bi-map"></i>
           Abrir en Google Maps
         </a>
