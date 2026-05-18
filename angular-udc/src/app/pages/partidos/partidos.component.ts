@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { ApiService } from '../../core/api.service';
 import { AuthService } from '../../core/auth.service';
 import { Match } from '../../core/models';
+import { teamLogoUrl } from '../../core/team-logos';
 import { CollapsiblePanelComponent } from '../../shared/components/collapsible-panel/collapsible-panel.component';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 import { MatchCardComponent } from '../../shared/components/match-card/match-card.component';
@@ -149,6 +150,10 @@ export class PartidosComponent implements OnInit {
     const assigned = match.arbitrosAsignados ?? 0;
     const required = match.arbitrosRequeridos ?? match.plazasArbitralesSolicitadas ?? 0;
     return required ? `${assigned}/${required}` : `${assigned}`;
+  }
+
+  teamLogo(teamName?: string | null, fallbackIndex = 0): string {
+    return teamLogoUrl(teamName, fallbackIndex);
   }
 
   private emptyForm(): Partial<Match> & { fechaLocal?: string } {

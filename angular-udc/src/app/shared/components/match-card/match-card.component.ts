@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Match } from '../../../core/models';
+import { teamLogoUrl } from '../../../core/team-logos';
 import { StatusBadgeComponent } from '../status-badge/status-badge.component';
 
 @Component({
@@ -64,5 +65,9 @@ export class MatchCardComponent {
 
   get categoryLabel(): string {
     return this.match.categoria ?? this.match.competicion ?? 'Categoría general';
+  }
+
+  teamLogo(teamName?: string | null, fallbackIndex = 0): string {
+    return teamLogoUrl(teamName, fallbackIndex);
   }
 }

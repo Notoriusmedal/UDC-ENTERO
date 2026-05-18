@@ -66,12 +66,12 @@
 
             <div class="featured-teams">
               <div class="team-crest">
-                <img [src]="teamLogo(1)" [alt]="match.equipoLocal ?? match.equipoLocalNombre ?? 'Equipo local'" />
+                <img [src]="teamLogo(match.equipoLocal ?? match.equipoLocalNombre, 1)" [alt]="match.equipoLocal ?? match.equipoLocalNombre ?? 'Equipo local'" />
                 <strong>{{ match.equipoLocal ?? match.equipoLocalNombre ?? 'Equipo local' }}</strong>
               </div>
               <span>VS</span>
               <div class="team-crest">
-                <img [src]="teamLogo(2)" [alt]="match.equipoVisitante ?? match.equipoVisitanteNombre ?? 'Equipo visitante'" />
+                <img [src]="teamLogo(match.equipoVisitante ?? match.equipoVisitanteNombre, 2)" [alt]="match.equipoVisitante ?? match.equipoVisitanteNombre ?? 'Equipo visitante'" />
                 <strong>{{ match.equipoVisitante ?? match.equipoVisitanteNombre ?? 'Equipo visitante' }}</strong>
               </div>
             </div>
@@ -118,8 +118,8 @@
                     <td>
                       <div class="match-name-row">
                         <span class="match-logo-pair" aria-hidden="true">
-                          <img [src]="teamLogo((index % 3) * 2 + 1)" alt="" />
-                          <img [src]="teamLogo((index % 3) * 2 + 2)" alt="" />
+                          <img [src]="teamLogo(match.equipoLocal ?? match.equipoLocalNombre, (index % 3) * 2 + 1)" alt="" />
+                          <img [src]="teamLogo(match.equipoVisitante ?? match.equipoVisitanteNombre, (index % 3) * 2 + 2)" alt="" />
                         </span>
                         <span>
                           <div class="match-name">{{ matchTitle(match) }}</div>
@@ -235,8 +235,8 @@
           @for (result of recentResults; track result.home + result.away; let index = $index) {
             <article class="result-item">
               <span class="result-logos" aria-hidden="true">
-                <img [src]="teamLogo(index * 2 + 1)" alt="" />
-                <img [src]="teamLogo(index * 2 + 2)" alt="" />
+                <img [src]="teamLogo(result.home, index * 2 + 1)" alt="" />
+                <img [src]="teamLogo(result.away, index * 2 + 2)" alt="" />
               </span>
               <div class="result-teams">
                 <strong>{{ result.home }}</strong>

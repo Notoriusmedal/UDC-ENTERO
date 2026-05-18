@@ -44,7 +44,9 @@
 
       <div class="teams-showcase" aria-label="Equipos del partido">
         <div class="team-card">
-          <div class="team-crest team-crest-blue">{{ localTeam(match).slice(0, 2).toUpperCase() }}</div>
+          <div class="team-crest">
+            <img [src]="teamLogo(localTeam(match), 1)" [alt]="localTeam(match)" />
+          </div>
           <strong>{{ localTeam(match) }}</strong>
           <span>Local</span>
         </div>
@@ -52,7 +54,9 @@
         <div class="versus-pill">VS</div>
 
         <div class="team-card">
-          <div class="team-crest team-crest-green">{{ awayTeam(match).slice(0, 2).toUpperCase() }}</div>
+          <div class="team-crest">
+            <img [src]="teamLogo(awayTeam(match), 2)" [alt]="awayTeam(match)" />
+          </div>
           <strong>{{ awayTeam(match) }}</strong>
           <span>Visitante</span>
         </div>

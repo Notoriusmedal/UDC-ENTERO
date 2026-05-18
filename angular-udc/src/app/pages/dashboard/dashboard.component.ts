@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { ApiService } from '../../core/api.service';
 import { AuthService } from '../../core/auth.service';
 import { DashboardStats, Match, PendingAssignment, QuickActionVm, StatCardVm } from '../../core/models';
+import { teamLogoUrl } from '../../core/team-logos';
 import { CollapsiblePanelComponent } from '../../shared/components/collapsible-panel/collapsible-panel.component';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 import { MatchCardComponent } from '../../shared/components/match-card/match-card.component';
@@ -260,8 +261,8 @@ export class DashboardComponent implements OnInit {
     return match.lugar || 'Lugar pendiente';
   }
 
-  teamLogo(index: number): string {
-    return `/assets/images/logo-equipo-${index}.png`;
+  teamLogo(teamName?: string | null, fallbackIndex = 0): string {
+    return teamLogoUrl(teamName, fallbackIndex);
   }
 
   pendingTitle(item: PendingAssignment): string {

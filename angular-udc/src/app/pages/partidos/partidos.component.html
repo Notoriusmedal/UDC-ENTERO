@@ -160,8 +160,16 @@
             @for (partido of partidos(); track partido.id) {
               <tr>
                 <td>
-                  <div class="table-title">{{ matchTitle(partido) }}</div>
-                  <div class="table-subtitle">{{ partido.competicion || 'Competición general' }}</div>
+                  <div class="table-match-cell">
+                    <span class="table-logo-pair" aria-hidden="true">
+                      <img [src]="teamLogo(partido.equipoLocal ?? partido.equipoLocalNombre, 1)" alt="" />
+                      <img [src]="teamLogo(partido.equipoVisitante ?? partido.equipoVisitanteNombre, 2)" alt="" />
+                    </span>
+                    <span>
+                      <div class="table-title">{{ matchTitle(partido) }}</div>
+                      <div class="table-subtitle">{{ partido.competicion || 'Competición general' }}</div>
+                    </span>
+                  </div>
                 </td>
                 <td><span class="soft-chip soft-chip-blue">{{ partido.deporte || 'Deporte' }}</span></td>
                 <td>{{ matchDate(partido) }}</td>

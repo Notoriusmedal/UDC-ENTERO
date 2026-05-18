@@ -2,6 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ApiService } from '../../core/api.service';
 import { Match } from '../../core/models';
+import { teamLogoUrl } from '../../core/team-logos';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 import { StatusBadgeComponent } from '../../shared/components/status-badge/status-badge.component';
 
@@ -52,6 +53,10 @@ export class PartidoDetalleComponent implements OnInit {
 
   awayTeam(match: Match): string {
     return match.equipoVisitante ?? match.equipoVisitanteNombre ?? 'Equipo visitante';
+  }
+
+  teamLogo(teamName?: string | null, fallbackIndex = 0): string {
+    return teamLogoUrl(teamName, fallbackIndex);
   }
 
   fullDate(match: Match): string {

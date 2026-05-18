@@ -10,9 +10,15 @@
   </div>
 
   <div class="match-teams">
-    <strong>{{ teams.home }}</strong>
+    <div class="match-team">
+      <img [src]="teamLogo(teams.home, 1)" [alt]="teams.home" />
+      <strong>{{ teams.home }}</strong>
+    </div>
     <span>vs</span>
-    <strong>{{ teams.away }}</strong>
+    <div class="match-team">
+      <img [src]="teamLogo(teams.away, 2)" [alt]="teams.away" />
+      <strong>{{ teams.away }}</strong>
+    </div>
   </div>
 
   <div class="match-meta">

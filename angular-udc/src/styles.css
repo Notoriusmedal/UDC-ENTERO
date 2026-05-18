@@ -505,6 +505,34 @@ textarea {
   font-weight: 650;
 }
 
+.table-match-cell {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  min-width: 0;
+}
+
+.table-logo-pair {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+.table-logo-pair img {
+  background: #ffffff;
+  border: 1px solid var(--app-border);
+  border-radius: 12px;
+  box-shadow: var(--app-shadow-sm);
+  height: 38px;
+  object-fit: contain;
+  padding: 4px;
+  width: 38px;
+}
+
+.table-logo-pair img + img {
+  margin-left: -10px;
+}
+
 .soft-chip {
   align-items: center;
   background: var(--app-surface-soft);

@@ -156,22 +156,23 @@
 }
 
 .team-crest {
+  background: #ffffff;
+  border: 1px solid var(--app-border);
   border-radius: 26px;
-  color: #ffffff;
+  box-shadow: var(--app-shadow-sm);
   display: grid;
-  font-size: 24px;
-  font-weight: 900;
   height: 86px;
+  overflow: hidden;
+  padding: 8px;
   place-items: center;
   width: 86px;
 }
 
-.team-crest-blue {
-  background: linear-gradient(135deg, #2563eb, #06b6d4);
-}
-
-.team-crest-green {
-  background: linear-gradient(135deg, #047857, #22c55e);
+.team-crest img {
+  display: block;
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
 }
 
 .versus-pill {

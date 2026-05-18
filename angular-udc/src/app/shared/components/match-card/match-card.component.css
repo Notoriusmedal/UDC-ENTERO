@@ -26,7 +26,26 @@
 
 .match-teams {
   display: grid;
-  gap: 4px;
+  gap: 10px;
+}
+
+.match-team {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  min-width: 0;
+}
+
+.match-team img {
+  background: #ffffff;
+  border: 1px solid var(--app-border);
+  border-radius: 14px;
+  box-shadow: var(--app-shadow-sm);
+  flex: 0 0 auto;
+  height: 44px;
+  object-fit: contain;
+  padding: 5px;
+  width: 44px;
 }
 
 .match-teams strong {
@@ -35,6 +54,7 @@
   font-weight: 800;
   letter-spacing: 0;
   line-height: 1.2;
+  min-width: 0;
 }
 
 .match-teams span {
