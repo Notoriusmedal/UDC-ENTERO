@@ -565,6 +565,27 @@ textarea {
   color: #ffffff;
 }
 
+.detail-action {
+  align-items: center;
+  background: var(--app-primary-soft);
+  border: 1px solid rgba(37, 99, 235, 0.12);
+  border-radius: 999px;
+  color: var(--app-primary-dark);
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 850;
+  gap: 7px;
+  min-height: 36px;
+  padding: 0 14px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.detail-action:hover {
+  background: var(--app-primary);
+  color: #ffffff;
+}
+
 .filters-grid {
   display: grid;
   gap: 14px;

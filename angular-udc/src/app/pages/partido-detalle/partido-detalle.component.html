@@ -1,0 +1,144 @@
+<section class="match-detail-page">
+  <a class="detail-back-link" routerLink="/partidos">
+    <i class="bi bi-arrow-left"></i>
+    Volver a partidos
+  </a>
+
+  @if (loading()) {
+    <div class="detail-loading">
+      <span class="spinner-border spinner-border-sm"></span>
+      Cargando información del partido...
+    </div>
+  } @else if (error()) {
+    <app-empty-state
+      icon="bi-exclamation-triangle"
+      title="No se pudo abrir el partido"
+      [description]="error()"
+      actionLabel="Volver al listado"
+      actionHref="/partidos"
+    />
+  } @else if (partido(); as match) {
+    <article class="match-detail-hero">
+      <div class="hero-content">
+        <div class="hero-kicker">
+          <span><i class="bi bi-trophy"></i>{{ match.deporte || 'Deporte' }}</span>
+          <span>{{ match.competicion || 'Competición general' }}</span>
+        </div>
+
+        <div class="hero-heading">
+          <h1>{{ matchTitle(match) }}</h1>
+          <app-status-badge [status]="match.estado || 'PROGRAMADO'" />
+        </div>
+
+        <p class="hero-summary">
+          Consulta la información principal del encuentro antes de asistir: horario,
+          instalación, cobertura y estado actualizado.
+        </p>
+
+        <div class="hero-meta">
+          <span><i class="bi bi-calendar2-week"></i>{{ shortDate(match) }}</span>
+          <span><i class="bi bi-geo-alt"></i>{{ match.lugar || 'Lugar pendiente' }}</span>
+          <span><i class="bi bi-shield-check"></i>Árbitros {{ coverage(match) }}</span>
+        </div>
+      </div>
+
+      <div class="teams-showcase" aria-label="Equipos del partido">
+        <div class="team-card">
+          <div class="team-crest team-crest-blue">{{ localTeam(match).slice(0, 2).toUpperCase() }}</div>
+          <strong>{{ localTeam(match) }}</strong>
+          <span>Local</span>
+        </div>
+
+        <div class="versus-pill">VS</div>
+
+        <div class="team-card">
+          <div class="team-crest team-crest-green">{{ awayTeam(match).slice(0, 2).toUpperCase() }}</div>
+          <strong>{{ awayTeam(match) }}</strong>
+          <span>Visitante</span>
+        </div>
+      </div>
+    </article>
+
+    <div class="match-detail-grid">
+      <article class="detail-card venue-card">
+        <div class="detail-card-header">
+          <span class="detail-icon detail-icon-blue"><i class="bi bi-geo-alt"></i></span>
+          <div>
+            <p class="detail-kicker">Ubicación</p>
+            <h2>{{ match.lugar || 'Lugar pendiente' }}</h2>
+          </div>
+        </div>
+
+        <div class="map-preview">
+          <span class="map-pin"><i class="bi bi-geo-alt-fill"></i></span>
+          <div>
+            <strong>{{ match.lugar || 'Instalación por confirmar' }}</strong>
+            <span>Canarias</span>
+          </div>
+        </div>
+
+        <a class="btn btn-app-primary detail-map-button" [href]="mapsUrl(match)" target="_blank" rel="noopener">
+          <i class="bi bi-map"></i>
+          Abrir en Google Maps
+        </a>
+      </article>
+
+      <article class="detail-card info-card">
+        <div class="detail-card-header">
+          <span class="detail-icon detail-icon-cyan"><i class="bi bi-info-circle"></i></span>
+          <div>
+            <p class="detail-kicker">Información del encuentro</p>
+            <h2>Datos principales</h2>
+          </div>
+        </div>
+
+        <dl class="detail-list">
+          <div>
+            <dt>Fecha y hora</dt>
+            <dd>{{ fullDate(match) }}</dd>
+          </div>
+          <div>
+            <dt>Deporte</dt>
+            <dd>{{ match.deporte || 'Deporte pendiente' }}</dd>
+          </div>
+          <div>
+            <dt>Competición</dt>
+            <dd>{{ match.competicion || 'Competición general' }}</dd>
+          </div>
+          <div>
+            <dt>Cobertura</dt>
+            <dd>{{ coverageText(match) }}</dd>
+          </div>
+        </dl>
+      </article>
+
+      <article class="detail-card spectator-card">
+        <div class="detail-card-header">
+          <span class="detail-icon detail-icon-green"><i class="bi bi-person-check"></i></span>
+          <div>
+            <p class="detail-kicker">Para asistentes</p>
+            <h2>Antes de ir</h2>
+          </div>
+        </div>
+
+        <ul class="spectator-list">
+          <li><i class="bi bi-clock"></i>Llega con margen para acceder a la instalación.</li>
+          <li><i class="bi bi-bell"></i>Revisa el estado por si hay cambios de última hora.</li>
+          <li><i class="bi bi-geo"></i>Usa el mapa para confirmar la ruta antes de salir.</li>
+        </ul>
+      </article>
+
+      <article class="detail-card notes-card">
+        <div class="detail-card-header">
+          <span class="detail-icon detail-icon-yellow"><i class="bi bi-card-text"></i></span>
+          <div>
+            <p class="detail-kicker">Observaciones</p>
+            <h2>Notas del partido</h2>
+          </div>
+        </div>
+
+        <p>{{ match.observaciones || 'No hay observaciones adicionales para este encuentro.' }}</p>
+      </article>
+    </div>
+  }
+</section>

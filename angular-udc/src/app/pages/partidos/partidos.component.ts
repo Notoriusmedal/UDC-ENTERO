@@ -1,5 +1,6 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { ApiService } from '../../core/api.service';
 import { AuthService } from '../../core/auth.service';
 import { Match } from '../../core/models';
@@ -10,7 +11,7 @@ import { StatusBadgeComponent } from '../../shared/components/status-badge/statu
 
 @Component({
   selector: 'app-partidos',
-  imports: [FormsModule, CollapsiblePanelComponent, EmptyStateComponent, MatchCardComponent, StatusBadgeComponent],
+  imports: [FormsModule, RouterLink, CollapsiblePanelComponent, EmptyStateComponent, MatchCardComponent, StatusBadgeComponent],
   templateUrl: './partidos.component.html',
 })
 export class PartidosComponent implements OnInit {
@@ -45,6 +46,10 @@ export class PartidosComponent implements OnInit {
 
   get canManage(): boolean {
     return ['ADMIN', 'ORGANIZADOR'].includes(this.auth.user()?.rol ?? '');
+  }
+
+  get isSpectator(): boolean {
+    return this.auth.user()?.rol === 'ESPECTADOR';
   }
 
   async load(): Promise<void> {

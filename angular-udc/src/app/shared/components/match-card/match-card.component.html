@@ -30,7 +30,9 @@
     </span>
   </div>
 
-  <a class="btn btn-outline-primary btn-sm mt-4" routerLink="/partidos">
-    Ver detalle
-  </a>
+  @if (showDetail) {
+    <a class="btn btn-outline-primary btn-sm mt-4" [routerLink]="['/partidos', match.id]">
+      Ver detalle
+    </a>
+  }
 </article>

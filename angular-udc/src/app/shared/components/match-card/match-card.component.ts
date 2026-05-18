@@ -11,6 +11,7 @@ import { StatusBadgeComponent } from '../status-badge/status-badge.component';
 })
 export class MatchCardComponent {
   @Input({ required: true }) match!: Match;
+  @Input() showDetail = true;
 
   get teams(): { home: string; away: string } {
     if (this.match.equipoLocal || this.match.equipoVisitante || this.match.equipoLocalNombre || this.match.equipoVisitanteNombre) {
