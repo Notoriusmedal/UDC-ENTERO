@@ -1,6 +1,6 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { ApiService } from './api.service';
-import { User } from './models';
+import { RegisterRequest, User } from './models';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -37,6 +37,25 @@ export class AuthService {
     }
   }
 
+  async register(data: RegisterRequest): Promise<void> {
+    this.loading.set(true);
+    this.loginError.set('');
+
+    try {
+      const response = await this.api.register(data);
+      localStorage.setItem(this.tokenKey, response.accessToken);
+      this.user.set(await this.api.me());
+    } catch (error) {
+      this.loginError.set(this.resolveErrorMessage(error, 'No se pudo crear la cuenta.'));
+    } finally {
+      this.loading.set(false);
+    }
+  }
+
+  clearError(): void {
+    this.loginError.set('');
+  }
+
   logout(): void {
     localStorage.removeItem(this.tokenKey);
     this.user.set(null);
@@ -61,5 +80,14 @@ export class AuthService {
     };
 
     return labels[role ?? ''] ?? role ?? '—';
+  }
+
+  private resolveErrorMessage(error: unknown, fallback: string): string {
+    if (error && typeof error === 'object' && 'error' in error) {
+      const body = (error as { error?: { mensaje?: string; message?: string } }).error;
+      return body?.mensaje || body?.message || fallback;
+    }
+
+    return fallback;
   }
 }

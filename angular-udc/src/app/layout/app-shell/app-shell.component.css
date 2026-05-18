@@ -2,7 +2,7 @@
   position: relative;
   min-height: 100dvh;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(340px, 410px);
+  grid-template-columns: minmax(0, 1fr) minmax(380px, 520px);
   align-items: center;
   gap: clamp(22px, 4vw, 64px);
   width: 100%;
@@ -175,7 +175,7 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
 
 .auth-icon {
@@ -208,6 +208,42 @@
   gap: 7px;
 }
 
+.auth-mode-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 18px;
+  padding: 5px;
+  border-radius: 18px;
+  background: rgba(10, 18, 32, 0.48);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.auth-mode-switch button {
+  min-height: 40px;
+  border: 0;
+  border-radius: 13px;
+  color: rgba(255, 255, 255, 0.66);
+  background: transparent;
+  font-weight: 800;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.auth-mode-switch button.is-active {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.13);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.register-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
 .form-label-group span {
   color: #ffffff;
   font-size: 13px;
@@ -217,9 +253,13 @@
 .form-control {
   border-radius: 18px;
   border-color: rgba(255, 255, 255, 0.16);
-  min-height: 56px;
+  min-height: 52px;
   background: rgba(10, 18, 32, 0.56);
   color: #ffffff;
+}
+
+select.form-control {
+  appearance: auto;
 }
 
 .form-control::placeholder {
@@ -332,7 +372,7 @@
     grid-column: 1;
     justify-self: center;
     align-self: end;
-    width: min(100%, 460px);
+    width: min(100%, 540px);
   }
 
   .app-shell {
@@ -384,5 +424,9 @@
   .auth-card {
     border-radius: 22px;
     padding: 18px;
+  }
+
+  .register-grid {
+    grid-template-columns: 1fr;
   }
 }

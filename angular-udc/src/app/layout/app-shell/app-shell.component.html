@@ -33,37 +33,106 @@
       <div class="auth-card-header">
         <span class="auth-icon"><i class="bi bi-shield-check"></i></span>
         <div>
-          <h2>Acceso</h2>
-          <p>Entra con tus credenciales UDC.</p>
+          <h2>{{ authMode() === 'login' ? 'Acceso' : 'Crear cuenta' }}</h2>
+          <p>{{ authMode() === 'login' ? 'Entra con tus credenciales UDC.' : 'Regístrate como organizador o árbitro.' }}</p>
         </div>
       </div>
 
-      <form (ngSubmit)="login()" class="d-grid gap-3">
-        <label class="form-label-group">
-          <span>Usuario</span>
-          <input class="form-control form-control-lg" name="username" [(ngModel)]="loginForm.username" required autocomplete="username" />
-        </label>
+      <div class="auth-mode-switch" role="tablist" aria-label="Modo de acceso">
+        <button type="button" [class.is-active]="authMode() === 'login'" (click)="setAuthMode('login')">Entrar</button>
+        <button type="button" [class.is-active]="authMode() === 'register'" (click)="setAuthMode('register')">Registrarse</button>
+      </div>
 
-        <label class="form-label-group">
-          <span>Contraseña</span>
-          <input class="form-control form-control-lg" name="password" type="password" [(ngModel)]="loginForm.password" required autocomplete="current-password" />
-        </label>
+      @if (authMode() === 'login') {
+        <form (ngSubmit)="login()" class="d-grid gap-3">
+          <label class="form-label-group">
+            <span>Usuario</span>
+            <input class="form-control form-control-lg" name="username" [(ngModel)]="loginForm.username" required autocomplete="username" />
+          </label>
 
-        @if (auth.loginError()) {
-          <div class="alert alert-danger mb-0">{{ auth.loginError() }}</div>
-        }
+          <label class="form-label-group">
+            <span>Contraseña</span>
+            <input class="form-control form-control-lg" name="password" type="password" [(ngModel)]="loginForm.password" required autocomplete="current-password" />
+          </label>
 
-        <button type="submit" class="btn btn-primary btn-lg" [disabled]="auth.loading()">
-          @if (auth.loading()) {
-            <span class="spinner-border spinner-border-sm me-2"></span>
-            Entrando
-          } @else {
-            Entrar al panel
+          @if (auth.loginError()) {
+            <div class="alert alert-danger mb-0">{{ auth.loginError() }}</div>
           }
-        </button>
 
-        <p class="login-note">Acceso solo para usuarios autorizados</p>
-      </form>
+          <button type="submit" class="btn btn-primary btn-lg" [disabled]="auth.loading()">
+            @if (auth.loading()) {
+              <span class="spinner-border spinner-border-sm me-2"></span>
+              Entrando
+            } @else {
+              Entrar al panel
+            }
+          </button>
+
+          <p class="login-note">Acceso solo para usuarios autorizados</p>
+        </form>
+      } @else {
+        <form (ngSubmit)="register()" class="d-grid gap-3">
+          <div class="register-grid">
+            <label class="form-label-group">
+              <span>Nombre</span>
+              <input class="form-control" name="regNombre" [(ngModel)]="registerForm.nombre" required autocomplete="given-name" />
+            </label>
+
+            <label class="form-label-group">
+              <span>Apellidos</span>
+              <input class="form-control" name="regApellidos" [(ngModel)]="registerForm.apellidos" required autocomplete="family-name" />
+            </label>
+
+            <label class="form-label-group">
+              <span>Usuario</span>
+              <input class="form-control" name="regUsername" [(ngModel)]="registerForm.username" required maxlength="64" autocomplete="username" />
+            </label>
+
+            <label class="form-label-group">
+              <span>Contraseña</span>
+              <input class="form-control" name="regPassword" type="password" [(ngModel)]="registerForm.password" required minlength="4" autocomplete="new-password" />
+            </label>
+
+            <label class="form-label-group">
+              <span>Correo</span>
+              <input class="form-control" name="regCorreo" type="email" [(ngModel)]="registerForm.correo" required autocomplete="email" />
+            </label>
+
+            <label class="form-label-group">
+              <span>Teléfono</span>
+              <input class="form-control" name="regTelefono" [(ngModel)]="registerForm.telefono" required autocomplete="tel" />
+            </label>
+
+            <label class="form-label-group">
+              <span>DNI/NIE</span>
+              <input class="form-control" name="regDocumento" [(ngModel)]="registerForm.documentoIdentidad" required maxlength="32" />
+            </label>
+
+            <label class="form-label-group">
+              <span>Tipo de cuenta</span>
+              <select class="form-control" name="regRol" [(ngModel)]="registerForm.rol" required>
+                <option value="ORGANIZADOR">Organizador</option>
+                <option value="ARBITRO">Árbitro</option>
+              </select>
+            </label>
+          </div>
+
+          @if (auth.loginError()) {
+            <div class="alert alert-danger mb-0">{{ auth.loginError() }}</div>
+          }
+
+          <button type="submit" class="btn btn-primary btn-lg" [disabled]="auth.loading()">
+            @if (auth.loading()) {
+              <span class="spinner-border spinner-border-sm me-2"></span>
+              Creando cuenta
+            } @else {
+              Crear cuenta y entrar
+            }
+          </button>
+
+          <p class="login-note">Los perfiles de administración se crean desde usuarios.</p>
+        </form>
+      }
     </section>
 
     <div class="auth-carousel-indicators" aria-hidden="true">

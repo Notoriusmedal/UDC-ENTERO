@@ -32,4 +32,25 @@ class UdcApplicationTests {
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.accessToken").value(not(blankOrNullString())));
 	}
+
+	@Test
+	void registroPublicoDevuelveJwt() throws Exception {
+		mockMvc.perform(post("/api/auth/register")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content("""
+						{
+						  "username":"nuevo-organizador",
+						  "password":"1234",
+						  "nombre":"Nuevo",
+						  "apellidos":"Organizador",
+						  "correo":"nuevo.organizador@udc.dev",
+						  "documentoIdentidad":"REG-001",
+						  "telefono":"600000001",
+						  "rol":"ORGANIZADOR"
+						}
+						"""))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.accessToken").value(not(blankOrNullString())))
+				.andExpect(jsonPath("$.rol").value("ORGANIZADOR"));
+	}
 }

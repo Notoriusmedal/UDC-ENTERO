@@ -58,6 +58,7 @@ public class SecurityConfig {
 				.headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+						.requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
 						.requestMatchers("/api/public/**").permitAll()
 						.requestMatchers("/h2-console/**").permitAll()
 						.requestMatchers("/error").permitAll()

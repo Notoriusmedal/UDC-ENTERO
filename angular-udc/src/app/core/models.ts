@@ -15,6 +15,17 @@ export type LoginResponse = {
   rol?: string;
 };
 
+export type RegisterRequest = {
+  username: string;
+  password: string;
+  nombre: string;
+  apellidos: string;
+  correo: string;
+  documentoIdentidad: string;
+  telefono: string;
+  rol: 'ORGANIZADOR' | 'ARBITRO';
+};
+
 export type DashboardStats = {
   partidosSemana?: number;
   partidosSemanaAnterior?: number;

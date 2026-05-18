@@ -9,6 +9,7 @@ import {
   Match,
   Notificacion,
   PendingAssignment,
+  RegisterRequest,
   User,
   UsuarioAdmin,
 } from './models';
@@ -23,6 +24,12 @@ export class ApiService {
   login(username: string, password: string): Promise<LoginResponse> {
     return firstValueFrom(
       this.http.post<LoginResponse>(`${this.apiBase}/auth/login`, { username, password }),
+    );
+  }
+
+  register(data: RegisterRequest): Promise<LoginResponse> {
+    return firstValueFrom(
+      this.http.post<LoginResponse>(`${this.apiBase}/auth/register`, data),
     );
   }
 

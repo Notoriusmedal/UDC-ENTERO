@@ -19,9 +19,20 @@ type AuthSlide = {
 })
 export class AppShellComponent implements OnInit, OnDestroy {
   readonly auth = inject(AuthService);
+  readonly authMode = signal<'login' | 'register'>('login');
   readonly loginForm = {
     username: 'admin',
     password: 'admin',
+  };
+  readonly registerForm = {
+    username: '',
+    password: '',
+    nombre: '',
+    apellidos: '',
+    correo: '',
+    documentoIdentidad: '',
+    telefono: '',
+    rol: 'ORGANIZADOR' as 'ORGANIZADOR' | 'ARBITRO',
   };
   readonly activeSlide = signal(0);
   readonly carouselIndicators = [0, 1, 2, 3];
@@ -78,6 +89,15 @@ export class AppShellComponent implements OnInit, OnDestroy {
 
   login(): void {
     void this.auth.login(this.loginForm.username, this.loginForm.password);
+  }
+
+  register(): void {
+    void this.auth.register({ ...this.registerForm });
+  }
+
+  setAuthMode(mode: 'login' | 'register'): void {
+    this.authMode.set(mode);
+    this.auth.clearError();
   }
 
   nextSlide(): void {
