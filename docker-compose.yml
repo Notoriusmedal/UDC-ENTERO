@@ -1,0 +1,41 @@
+services:
+  mariadb:
+    image: mariadb:11.4
+    container_name: udc-mariadb
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: udc
+      MARIADB_USER: udc
+      MARIADB_PASSWORD: cambiar
+      MARIADB_ROOT_PASSWORD: cambiar-root
+    ports:
+      - "3306:3306"
+    volumes:
+      - udc_mariadb_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 8
+
+  backend:
+    build:
+      context: ./backend
+    container_name: udc-backend
+    restart: unless-stopped
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: mariadb
+      SPRING_DATASOURCE_URL: jdbc:mariadb://mariadb:3306/udc?characterEncoding=UTF-8&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: udc
+      SPRING_DATASOURCE_PASSWORD: cambiar
+      SERVER_PORT: 8080
+      CORS_ALLOWED_ORIGIN: http://localhost:4200
+      CORS_EXTRA_ALLOWED_ORIGINS: http://localhost:5173,http://localhost:8000,http://127.0.0.1:8000
+    ports:
+      - "8080:8080"
+
+volumes:
+  udc_mariadb_data:

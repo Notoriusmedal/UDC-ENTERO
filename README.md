@@ -69,6 +69,45 @@ cd backend
 
 Para entrega/demo en la nube se puede usar el perfil `dev` con H2 en memoria. Los datos se regeneran al arrancar.
 
+## Docker
+
+### Backend Con Docker
+
+El backend incluye `backend/Dockerfile`.
+
+Para construir y arrancar solo el backend con H2 en memoria:
+
+```bash
+docker build -t udc-backend ./backend
+docker run --rm -p 8080:8080 -e SPRING_PROFILES_ACTIVE=dev udc-backend
+```
+
+API:
+
+```text
+http://localhost:8080/api
+```
+
+### Backend + MariaDB En Local
+
+Desde la raiz del repo:
+
+```bash
+docker compose up --build
+```
+
+Esto levanta:
+
+- `mariadb`: base de datos MariaDB local.
+- `backend`: API Spring Boot en `http://localhost:8080/api`.
+
+El frontend Angular se puede seguir arrancando fuera de Docker:
+
+```bash
+cd angular-udc
+npx -y node@24 node_modules/@angular/cli/bin/ng serve --host 127.0.0.1 --port 4200
+```
+
 ## Despliegue Recomendado Gratis
 
 ### Frontend En Vercel
@@ -95,7 +134,21 @@ Si esta variable no existe, el login no podra conectar con el backend.
 
 ### Backend En Render
 
-Crea un Web Service desde este mismo repo y configura:
+Crea un Web Service desde este mismo repo. Puedes desplegarlo con Docker:
+
+```text
+Root Directory: backend
+Environment: Docker
+Dockerfile Path: Dockerfile
+```
+
+Variables recomendadas para demo con H2:
+
+```text
+SPRING_PROFILES_ACTIVE=dev
+```
+
+Tambien puedes desplegarlo sin Docker con:
 
 ```text
 Root Directory: backend
