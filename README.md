@@ -71,9 +71,38 @@ Para entrega/demo en la nube se puede usar el perfil `dev` con H2 en memoria. Lo
 
 ## Docker
 
-### Backend Con Docker
+### Demo Rapida Backend + Frontend
 
-El backend incluye `backend/Dockerfile`.
+Para la presentacion, esta es la forma mas rapida. Levanta el backend con H2 en memoria y el frontend Angular en Nginx:
+
+```bash
+docker compose -f docker-compose.demo.yml up --build
+```
+
+URLs:
+
+```text
+Frontend: http://localhost:4200
+Backend:  http://localhost:8080/api
+```
+
+Credenciales demo:
+
+```text
+admin / admin
+coordinador / 1234
+organizador / 1234
+arbitro / 1234
+espectador / 1234
+```
+
+Para pararlo:
+
+```bash
+docker compose -f docker-compose.demo.yml down
+```
+
+### Backend Con Docker
 
 Para construir y arrancar solo el backend con H2 en memoria:
 
@@ -88,7 +117,7 @@ API:
 http://localhost:8080/api
 ```
 
-### Backend + MariaDB En Local
+### Stack Completo Con MariaDB
 
 Desde la raiz del repo:
 
@@ -100,13 +129,7 @@ Esto levanta:
 
 - `mariadb`: base de datos MariaDB local.
 - `backend`: API Spring Boot en `http://localhost:8080/api`.
-
-El frontend Angular se puede seguir arrancando fuera de Docker:
-
-```bash
-cd angular-udc
-npx -y node@24 node_modules/@angular/cli/bin/ng serve --host 127.0.0.1 --port 4200
-```
+- `frontend`: app Angular en `http://localhost:4200`.
 
 ## Despliegue Recomendado Gratis
 

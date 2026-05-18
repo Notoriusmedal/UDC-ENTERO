@@ -33,9 +33,19 @@ services:
       SPRING_DATASOURCE_PASSWORD: cambiar
       SERVER_PORT: 8080
       CORS_ALLOWED_ORIGIN: http://localhost:4200
-      CORS_EXTRA_ALLOWED_ORIGINS: http://localhost:5173,http://localhost:8000,http://127.0.0.1:8000
+      CORS_EXTRA_ALLOWED_ORIGINS: http://127.0.0.1:4200,http://localhost:5173,http://localhost:8000,http://127.0.0.1:8000
     ports:
       - "8080:8080"
+
+  frontend:
+    build:
+      context: ./angular-udc
+    container_name: udc-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "4200:80"
 
 volumes:
   udc_mariadb_data:
