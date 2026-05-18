@@ -256,27 +256,59 @@
 .map-preview {
   align-items: center;
   background:
-    linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(6, 182, 212, 0.08)),
+    linear-gradient(135deg, rgba(37, 99, 235, 0.075), rgba(6, 182, 212, 0.06)),
     var(--app-surface-soft);
   border: 1px solid var(--app-border);
-  border-radius: 22px;
+  border-radius: 20px;
   display: flex;
-  gap: 14px;
+  gap: 12px;
   margin-bottom: 16px;
-  min-height: 160px;
-  padding: 18px;
+  min-height: 96px;
+  overflow: hidden;
+  padding: 16px;
+  position: relative;
+}
+
+.map-preview::after {
+  background:
+    linear-gradient(90deg, rgba(37, 99, 235, 0.08) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(37, 99, 235, 0.08) 1px, transparent 1px);
+  background-size: 26px 26px;
+  content: "";
+  inset: 0;
+  opacity: 0.28;
+  pointer-events: none;
+  position: absolute;
 }
 
 .map-pin {
   align-items: center;
-  background: var(--app-primary);
-  border-radius: 999px;
-  box-shadow: 0 16px 40px rgba(37, 99, 235, 0.24);
+  background: linear-gradient(135deg, var(--app-primary), var(--app-cyan));
+  border-radius: 16px;
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.2);
   color: #ffffff;
   display: inline-flex;
-  height: 52px;
+  flex: 0 0 auto;
+  font-size: 20px;
+  height: 46px;
   justify-content: center;
-  width: 52px;
+  line-height: 1;
+  position: relative;
+  width: 46px;
+  z-index: 1;
+}
+
+.map-pin i {
+  color: #ffffff;
+  display: block;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.map-preview > div {
+  min-width: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .map-preview strong,
