@@ -122,7 +122,7 @@ Build Command: npm run build
 Output Directory: dist
 ```
 
-El repo incluye `package.json` y `vercel.json` en la raiz para evitar el error `404: NOT_FOUND` de Vercel. El build instala el frontend Angular, compila la app y copia el resultado final a una carpeta `dist/` simple, que es la que Vercel debe publicar.
+El repo incluye `package.json` y `vercel.json` en la raiz para evitar el error `404: NOT_FOUND` de Vercel. El build instala el frontend Angular, compila la app y copia el resultado final a una carpeta `dist/` simple, que es la que Vercel debe publicar. La configuracion de rutas respeta primero los archivos y funciones `/api`, y despues envia el resto a `index.html` para Angular.
 
 En produccion el frontend llama a `/api`. Vercel reenvia esas llamadas al backend usando la variable de entorno:
 
