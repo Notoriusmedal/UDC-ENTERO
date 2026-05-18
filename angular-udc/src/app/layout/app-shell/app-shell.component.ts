@@ -21,8 +21,8 @@ export class AppShellComponent implements OnInit, OnDestroy {
   readonly auth = inject(AuthService);
   readonly authMode = signal<'login' | 'register'>('login');
   readonly loginForm = {
-    username: 'admin',
-    password: 'admin',
+    username: '',
+    password: '',
   };
   readonly registerForm = {
     username: '',
