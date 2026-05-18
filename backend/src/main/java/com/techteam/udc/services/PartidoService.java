@@ -307,6 +307,9 @@ public class PartidoService {
 					throw new ProhibidoOperacionException("No puedes ver este partido");
 				}
 			}
+			case ESPECTADOR -> {
+				// Los espectadores pueden consultar partidos, pero no gestionarlos.
+			}
 		}
 	}
 
@@ -322,6 +325,7 @@ public class PartidoService {
 				}
 				yield List.copyOf(porId.values());
 			}
+			case ESPECTADOR -> partidoRepository.findAll();
 		};
 	}
 

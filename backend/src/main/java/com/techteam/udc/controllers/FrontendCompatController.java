@@ -320,6 +320,7 @@ public class FrontendCompatController {
 					case ADMIN, COORDINADOR_ARBITROS -> true;
 					case ORGANIZADOR -> a.getPartido().getOrganizador().getId().equals(usuario.getId());
 					case ARBITRO -> a.getArbitro().getId().equals(usuario.getId());
+					case ESPECTADOR -> false;
 				})
 				.toList();
 	}
@@ -330,6 +331,7 @@ public class FrontendCompatController {
 					case ADMIN, COORDINADOR_ARBITROS -> true;
 					case ORGANIZADOR -> p.getOrganizador().getId().equals(usuario.getId());
 					case ARBITRO -> asignacionRepository.existsByArbitro_IdAndPartido_Id(usuario.getId(), p.getId());
+					case ESPECTADOR -> true;
 				})
 				.toList();
 	}

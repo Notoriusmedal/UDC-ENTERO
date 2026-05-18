@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.techteam.udc.dto.LoginRequest;
 import com.techteam.udc.dto.LoginResponse;
 import com.techteam.udc.dto.RegistroRequest;
+import com.techteam.udc.dto.RegistroResponse;
 import com.techteam.udc.dto.UsuarioActualResponse;
 import com.techteam.udc.errores.ReglaNegocioException;
 import com.techteam.udc.models.Rol;
@@ -60,10 +61,10 @@ public class AuthController {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<LoginResponse> register(@Valid @RequestBody RegistroRequest body) {
+	public ResponseEntity<RegistroResponse> register(@Valid @RequestBody RegistroRequest body) {
 		Rol rol = body.rol();
-		if (rol != Rol.ORGANIZADOR && rol != Rol.ARBITRO) {
-			throw new ReglaNegocioException("Solo se permite registrar organizadores o árbitros");
+		if (rol != Rol.ESPECTADOR && rol != Rol.ORGANIZADOR && rol != Rol.ARBITRO) {
+			throw new ReglaNegocioException("Solo se permite registrar espectadores, organizadores o árbitros");
 		}
 
 		String username = body.username().trim();
@@ -80,6 +81,7 @@ public class AuthController {
 			throw new ReglaNegocioException("El documento de identidad ya existe");
 		}
 
+		boolean activoDesdeRegistro = rol == Rol.ESPECTADOR;
 		Usuario usuario = new Usuario(
 				username,
 				passwordEncoder.encode(body.password()),
@@ -89,18 +91,22 @@ public class AuthController {
 				documento,
 				body.telefono().trim(),
 				rol,
-				true,
-				rol == Rol.ARBITRO);
+				activoDesdeRegistro,
+				false);
 
 		usuario = usuarioRepository.save(usuario);
+		if (!activoDesdeRegistro) {
+			return ResponseEntity.accepted().body(RegistroResponse.pendiente(usuario.getUsername(), rol.name()));
+		}
+
 		var principal = new PrincipalUsuario(usuario);
 		String jwt = jwtUtil.generateToken(principal);
 
-		return ResponseEntity.ok(new LoginResponse(
+		return ResponseEntity.ok(RegistroResponse.activo(new LoginResponse(
 				jwt,
 				jwtUtil.getExpiresInApproxMinutes(),
 				principal.getUsername(),
-				principal.getRol().name()));
+				principal.getRol().name())));
 	}
 
 	@GetMapping("/me")

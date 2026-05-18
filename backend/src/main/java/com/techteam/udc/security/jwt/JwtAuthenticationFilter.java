@@ -55,6 +55,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			String username = claims.getSubject();
 			if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 				UserDetails user = UDS.loadUserByUsername(username);
+				if (!user.isEnabled()) {
+					filterChain.doFilter(request, response);
+					return;
+				}
 				if (!JWTU.validateToken(raw, user.getUsername())) {
 					filterChain.doFilter(request, response);
 					return;

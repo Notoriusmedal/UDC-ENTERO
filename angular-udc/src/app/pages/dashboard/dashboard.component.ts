@@ -92,14 +92,17 @@ export class DashboardComponent implements OnInit {
         href: '/calendario',
         tone: 'yellow',
       },
-      {
+    ];
+
+    if (['ADMIN', 'COORDINADOR_ARBITROS', 'ORGANIZADOR', 'ARBITRO'].includes(role ?? '')) {
+      actions.push({
         title: 'Mis asignaciones',
         subtitle: 'Confirmar o revisar partidos',
         icon: 'bi-calendar2-check',
         href: '/asignaciones',
         tone: 'green',
-      },
-    ];
+      });
+    }
 
     if (['ADMIN', 'ORGANIZADOR'].includes(role ?? '')) {
       actions.unshift({

@@ -28,6 +28,7 @@ export class UsuariosComponent implements OnInit {
     return {
       total: usuarios.length,
       activos: usuarios.filter((u) => u.enabled).length,
+      pendientes: usuarios.filter((u) => !u.enabled && ['ORGANIZADOR', 'ARBITRO'].includes(u.rol ?? '')).length,
       admins: usuarios.filter((u) => u.rol === 'ADMIN').length,
       arbitros: usuarios.filter((u) => u.rol === 'ARBITRO').length,
     };
@@ -144,6 +145,16 @@ export class UsuariosComponent implements OnInit {
 
   fullName(usuario: UsuarioAdmin): string {
     return `${usuario.nombre ?? ''} ${usuario.apellidos ?? ''}`.trim() || usuario.username || 'Usuario';
+  }
+
+  accountStatus(usuario: UsuarioAdmin): string {
+    if (usuario.enabled) return 'sin_conflictos';
+    return ['ORGANIZADOR', 'ARBITRO'].includes(usuario.rol ?? '') ? 'pendiente' : 'cancelado';
+  }
+
+  accountStatusLabel(usuario: UsuarioAdmin): string {
+    if (usuario.enabled) return 'Activo';
+    return ['ORGANIZADOR', 'ARBITRO'].includes(usuario.rol ?? '') ? 'Pendiente admin' : 'Inactivo';
   }
 
   private emptyForm() {

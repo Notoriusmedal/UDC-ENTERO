@@ -10,6 +10,7 @@ export class AuthService {
   readonly user = signal<User | null>(null);
   readonly loading = signal(false);
   readonly loginError = signal('');
+  readonly authMessage = signal('');
   readonly isAuthenticated = computed(() => !!this.user());
 
   async restoreSession(): Promise<void> {
@@ -25,9 +26,13 @@ export class AuthService {
   async login(username: string, password: string): Promise<void> {
     this.loading.set(true);
     this.loginError.set('');
+    this.authMessage.set('');
 
     try {
       const response = await this.api.login(username, password);
+      if (!response.accessToken) {
+        throw new Error('Missing access token');
+      }
       localStorage.setItem(this.tokenKey, response.accessToken);
       this.user.set(await this.api.me());
     } catch {
@@ -40,9 +45,16 @@ export class AuthService {
   async register(data: RegisterRequest): Promise<void> {
     this.loading.set(true);
     this.loginError.set('');
+    this.authMessage.set('');
 
     try {
       const response = await this.api.register(data);
+
+      if (response.estado === 'PENDIENTE_APROBACION' || !response.accessToken) {
+        this.authMessage.set(response.mensaje || 'Cuenta creada. Un administrador debe aprobarla antes de poder entrar.');
+        return;
+      }
+
       localStorage.setItem(this.tokenKey, response.accessToken);
       this.user.set(await this.api.me());
     } catch (error) {
@@ -54,6 +66,7 @@ export class AuthService {
 
   clearError(): void {
     this.loginError.set('');
+    this.authMessage.set('');
   }
 
   logout(): void {
@@ -77,6 +90,7 @@ export class AuthService {
       COORDINADOR_ARBITROS: 'Coordinador',
       ORGANIZADOR: 'Organizador',
       ARBITRO: 'Árbitro',
+      ESPECTADOR: 'Espectador',
     };
 
     return labels[role ?? ''] ?? role ?? '—';

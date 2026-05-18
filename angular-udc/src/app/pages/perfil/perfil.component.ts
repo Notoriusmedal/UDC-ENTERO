@@ -41,6 +41,13 @@ export class PerfilComponent {
       ];
     }
 
+    if (role === 'ESPECTADOR') {
+      return [
+        ...common,
+        { icon: 'bi-trophy', title: 'Partidos', text: 'Consulta encuentros y resultados disponibles.' },
+      ];
+    }
+
     return [
       ...common,
       { icon: 'bi-calendar-check', title: 'Mis asignaciones', text: 'Confirmación o rechazo de partidos asignados.' },

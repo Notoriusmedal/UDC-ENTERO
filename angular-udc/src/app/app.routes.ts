@@ -23,7 +23,12 @@ export const routes: Routes = [
         canActivate: [roleGuard],
         data: { roles: ['ADMIN', 'COORDINADOR_ARBITROS'] },
       },
-      { path: 'asignaciones', component: AsignacionesComponent, canActivate: [authGuard] },
+      {
+        path: 'asignaciones',
+        component: AsignacionesComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN', 'COORDINADOR_ARBITROS', 'ORGANIZADOR', 'ARBITRO'] },
+      },
       { path: 'calendario', component: CalendarioComponent, canActivate: [authGuard] },
       {
         path: 'usuarios',

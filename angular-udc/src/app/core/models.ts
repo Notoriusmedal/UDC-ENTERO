@@ -8,11 +8,16 @@ export type User = {
 };
 
 export type LoginResponse = {
-  accessToken: string;
+  accessToken?: string | null;
   tokenType?: string;
   expiresInMinutes?: number;
   username?: string;
   rol?: string;
+};
+
+export type RegisterResponse = LoginResponse & {
+  estado?: 'ACTIVO' | 'PENDIENTE_APROBACION';
+  mensaje?: string;
 };
 
 export type RegisterRequest = {
@@ -23,7 +28,7 @@ export type RegisterRequest = {
   correo: string;
   documentoIdentidad: string;
   telefono: string;
-  rol: 'ORGANIZADOR' | 'ARBITRO';
+  rol: 'ESPECTADOR' | 'ORGANIZADOR' | 'ARBITRO';
 };
 
 export type DashboardStats = {

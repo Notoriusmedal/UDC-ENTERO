@@ -10,6 +10,7 @@ import {
   Notificacion,
   PendingAssignment,
   RegisterRequest,
+  RegisterResponse,
   User,
   UsuarioAdmin,
 } from './models';
@@ -27,9 +28,9 @@ export class ApiService {
     );
   }
 
-  register(data: RegisterRequest): Promise<LoginResponse> {
+  register(data: RegisterRequest): Promise<RegisterResponse> {
     return firstValueFrom(
-      this.http.post<LoginResponse>(`${this.apiBase}/auth/register`, data),
+      this.http.post<RegisterResponse>(`${this.apiBase}/auth/register`, data),
     );
   }
 

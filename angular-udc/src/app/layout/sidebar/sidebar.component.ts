@@ -22,7 +22,7 @@ export class SidebarComponent {
     { label: 'Dashboard', icon: 'bi-speedometer2', link: '/dashboard' },
     { label: 'Partidos', icon: 'bi-trophy', link: '/partidos' },
     { label: 'Árbitros', icon: 'bi-person-badge', link: '/arbitros', roles: ['ADMIN', 'COORDINADOR_ARBITROS'] },
-    { label: 'Asignaciones', icon: 'bi-calendar-check', link: '/asignaciones' },
+    { label: 'Asignaciones', icon: 'bi-calendar-check', link: '/asignaciones', roles: ['ADMIN', 'COORDINADOR_ARBITROS', 'ORGANIZADOR', 'ARBITRO'] },
     { label: 'Calendario', icon: 'bi-calendar3', link: '/calendario' },
   ];
 

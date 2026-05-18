@@ -34,7 +34,29 @@ class UdcApplicationTests {
 	}
 
 	@Test
-	void registroPublicoDevuelveJwt() throws Exception {
+	void registroEspectadorDevuelveJwt() throws Exception {
+		mockMvc.perform(post("/api/auth/register")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content("""
+						{
+						  "username":"nuevo-espectador",
+						  "password":"1234",
+						  "nombre":"Nuevo",
+						  "apellidos":"Espectador",
+						  "correo":"nuevo.espectador@udc.dev",
+						  "documentoIdentidad":"REG-000",
+						  "telefono":"600000000",
+						  "rol":"ESPECTADOR"
+						}
+						"""))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.accessToken").value(not(blankOrNullString())))
+				.andExpect(jsonPath("$.estado").value("ACTIVO"))
+				.andExpect(jsonPath("$.rol").value("ESPECTADOR"));
+	}
+
+	@Test
+	void registroOrganizadorQuedaPendiente() throws Exception {
 		mockMvc.perform(post("/api/auth/register")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content("""
@@ -49,8 +71,9 @@ class UdcApplicationTests {
 						  "rol":"ORGANIZADOR"
 						}
 						"""))
-				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.accessToken").value(not(blankOrNullString())))
+				.andExpect(status().isAccepted())
+				.andExpect(jsonPath("$.accessToken").value(blankOrNullString()))
+				.andExpect(jsonPath("$.estado").value("PENDIENTE_APROBACION"))
 				.andExpect(jsonPath("$.rol").value("ORGANIZADOR"));
 	}
 }

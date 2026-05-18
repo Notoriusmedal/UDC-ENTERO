@@ -69,6 +69,10 @@ public class DataSeeder implements CommandLineRunner {
 				"coordinador@udc.dev", "00000002C", "600000002",
 				Rol.COORDINADOR_ARBITROS, false, null, null, null);
 
+		crearUsuarioSiNoExiste("espectador", "1234", "Nayra", "Ramos",
+				"espectador@udc.dev", "00000006G", "600000006",
+				Rol.ESPECTADOR, false, null, null, null);
+
 		crearUsuarioSiNoExiste("arbitro", "1234", "Miguel", "González",
 				"arbitro@udc.dev", "00000003D", "600000003",
 				Rol.ARBITRO, true, "REGIONAL", "UDC-ARB-001", "FUTBOL,BALONMANO");

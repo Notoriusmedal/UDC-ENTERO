@@ -34,7 +34,7 @@
         <span class="auth-icon"><i class="bi bi-shield-check"></i></span>
         <div>
           <h2>{{ authMode() === 'login' ? 'Acceso' : 'Crear cuenta' }}</h2>
-          <p>{{ authMode() === 'login' ? 'Entra con tus credenciales UDC.' : 'Regístrate como organizador o árbitro.' }}</p>
+          <p>{{ authMode() === 'login' ? 'Entra con tus credenciales UDC.' : 'Elige espectador, organizador o árbitro.' }}</p>
         </div>
       </div>
 
@@ -111,11 +111,16 @@
             <label class="form-label-group">
               <span>Tipo de cuenta</span>
               <select class="form-control" name="regRol" [(ngModel)]="registerForm.rol" required>
+                <option value="ESPECTADOR">Espectador</option>
                 <option value="ORGANIZADOR">Organizador</option>
                 <option value="ARBITRO">Árbitro</option>
               </select>
             </label>
           </div>
+
+          @if (auth.authMessage()) {
+            <div class="alert alert-success mb-0">{{ auth.authMessage() }}</div>
+          }
 
           @if (auth.loginError()) {
             <div class="alert alert-danger mb-0">{{ auth.loginError() }}</div>
@@ -126,11 +131,11 @@
               <span class="spinner-border spinner-border-sm me-2"></span>
               Creando cuenta
             } @else {
-              Crear cuenta y entrar
+              Crear cuenta
             }
           </button>
 
-          <p class="login-note">Los perfiles de administración se crean desde usuarios.</p>
+          <p class="login-note">Organizadores y árbitros necesitan aprobación del administrador.</p>
         </form>
       }
     </section>
