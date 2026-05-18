@@ -56,7 +56,7 @@ class UdcApplicationTests {
 	}
 
 	@Test
-	void registroOrganizadorQuedaPendiente() throws Exception {
+	void registroOrganizadorPublicoNoPermitido() throws Exception {
 		mockMvc.perform(post("/api/auth/register")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content("""
@@ -71,9 +71,7 @@ class UdcApplicationTests {
 						  "rol":"ORGANIZADOR"
 						}
 						"""))
-				.andExpect(status().isAccepted())
-				.andExpect(jsonPath("$.accessToken").value(blankOrNullString()))
-				.andExpect(jsonPath("$.estado").value("PENDIENTE_APROBACION"))
-				.andExpect(jsonPath("$.rol").value("ORGANIZADOR"));
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.codigo").value("REGLA_NEGOCIO"));
 	}
 }

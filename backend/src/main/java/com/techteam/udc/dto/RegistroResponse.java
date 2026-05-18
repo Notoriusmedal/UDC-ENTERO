@@ -20,15 +20,4 @@ public record RegistroResponse(
 				login.username(),
 				login.rol());
 	}
-
-	public static RegistroResponse pendiente(String username, String rol) {
-		return new RegistroResponse(
-				"PENDIENTE_APROBACION",
-				"Cuenta creada. Un administrador debe aprobarla antes de poder entrar.",
-				"Bearer",
-				null,
-				0,
-				username,
-				rol);
-	}
 }

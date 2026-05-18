@@ -63,8 +63,8 @@ public class AuthController {
 	@PostMapping("/register")
 	public ResponseEntity<RegistroResponse> register(@Valid @RequestBody RegistroRequest body) {
 		Rol rol = body.rol();
-		if (rol != Rol.ESPECTADOR && rol != Rol.ORGANIZADOR && rol != Rol.ARBITRO) {
-			throw new ReglaNegocioException("Solo se permite registrar espectadores, organizadores o árbitros");
+		if (rol != Rol.ESPECTADOR) {
+			throw new ReglaNegocioException("El registro público solo está disponible para espectadores. Organizadores y árbitros los crea un administrador.");
 		}
 
 		String username = body.username().trim();
@@ -81,7 +81,6 @@ public class AuthController {
 			throw new ReglaNegocioException("El documento de identidad ya existe");
 		}
 
-		boolean activoDesdeRegistro = rol == Rol.ESPECTADOR;
 		Usuario usuario = new Usuario(
 				username,
 				passwordEncoder.encode(body.password()),
@@ -91,13 +90,10 @@ public class AuthController {
 				documento,
 				body.telefono().trim(),
 				rol,
-				activoDesdeRegistro,
+				true,
 				false);
 
 		usuario = usuarioRepository.save(usuario);
-		if (!activoDesdeRegistro) {
-			return ResponseEntity.accepted().body(RegistroResponse.pendiente(usuario.getUsername(), rol.name()));
-		}
 
 		var principal = new PrincipalUsuario(usuario);
 		String jwt = jwtUtil.generateToken(principal);

@@ -32,7 +32,7 @@ export class AppShellComponent implements OnInit, OnDestroy {
     correo: '',
     documentoIdentidad: '',
     telefono: '',
-    rol: 'ESPECTADOR' as 'ESPECTADOR' | 'ORGANIZADOR' | 'ARBITRO',
+    rol: 'ESPECTADOR' as const,
   };
   readonly activeSlide = signal(0);
   readonly carouselIndicators = [0, 1, 2, 3];

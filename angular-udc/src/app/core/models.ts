@@ -16,7 +16,7 @@ export type LoginResponse = {
 };
 
 export type RegisterResponse = LoginResponse & {
-  estado?: 'ACTIVO' | 'PENDIENTE_APROBACION';
+  estado?: 'ACTIVO';
   mensaje?: string;
 };
 
@@ -28,7 +28,7 @@ export type RegisterRequest = {
   correo: string;
   documentoIdentidad: string;
   telefono: string;
-  rol: 'ESPECTADOR' | 'ORGANIZADOR' | 'ARBITRO';
+  rol: 'ESPECTADOR';
 };
 
 export type DashboardStats = {
